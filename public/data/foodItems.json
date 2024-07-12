@@ -1,0 +1,17 @@
+[
+        {
+            "id": 1,
+            "image": "/images/burger.jpg",
+            "name": "Burger",
+            "price": 9.99,
+            "calories": 777
+        },
+        {
+            "id": 2,
+            "image": "/images/sandwich.jpg",
+            "name": "Sandwich",
+            "price": 10.99,
+            "calories": 500
+        }
+
+    ]
