@@ -2,10 +2,12 @@ export interface FoodItemType {
     id: number;
     image: string;
     name: string;
-    price: string;
+    price: number;
     calories: number;
 }
 
-export interface Item {
-    item: FoodItemType[];
+export interface Items {
+    items: FoodItemType[];
 }
+
+export type SearchTermType = string;

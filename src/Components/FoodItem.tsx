@@ -16,7 +16,7 @@ const FoodItem : React.FC<FoodItemProperties> = ({ item }) => {
             </div>
             <div className = "foodItemInfo">
                 <h3>{item.name}</h3>
-                <span>${item.price}</span>
+                <span>${Number(item.price.toFixed(2))}</span>
                 <span>{item.calories}</span>
             </div>
         </div>

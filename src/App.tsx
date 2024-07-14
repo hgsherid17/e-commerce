@@ -1,52 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import FoodItem from './Components/FoodItem.tsx';
-import { FoodItemType } from './types.ts';
+import { FoodItemType, Items, SearchTermType } from './types.ts';
+import foodItems from './data/foodItems.json'; // Static data does not need useState
 
 const App: React.FC = ()  => {
-  
-  // Create new state to fetch food items 
-  const [foodItems, setFoodItems] = useState<FoodItemType[]>([]);
+  const [searchTerm, setSearchTerm] = useState<SearchTermType>("");
+  const [filteredItems, setFilteredItems] = useState<FoodItemType[]>(foodItems);
 
-  /*
-    Use this block to search and retrieve food items
-    const [searchTerm, setSearchTerm] = useState("");
-
-    
-    // Need to create component for search
-    const searchFoodItems = async(name) => {
-      const response = await fetch(????);
-      const data = await response.json();
-
-      setFoodItems(data);
-    }
-  */
-
-  // This method gets food data from the provided json file
-  const fetchFoodItems = () => {
-    fetch('./data/foodItems.json')
-    .then((response) => {
-      console.log("fetching food items...");
-      return response.json();
-    })
-    .then((foodItems : FoodItemType[]) => {
-      console.log("food items fetched successfully");
-      setFoodItems(foodItems);
-    })
-    .catch((error) => console.error('Error getting food data: ', error));
-  };
-
- useEffect(() => {
-    // Fetch data state
-    fetchFoodItems();
-  }, []);
+  /**
+   * Searches json of food items given a specific search term
+   * @param term 
+   */
+  const searchFoodItems = async(term: string) => {
+    setSearchTerm(term);
+    const filtered = foodItems.filter(item => 
+      item.name.toLowerCase().includes(term.toLowerCase()));
+      setFilteredItems(filtered);
+  }
 
   return (
     <div className = "app">
       <h1>E-Commerce Application</h1>
+
+      <div className = "search">
+        <input 
+          placeholder = "Search for food..."
+          value = {searchTerm}
+          // If we want to search automatically,
+          // change to "searchFoodItems"
+          onChange={(e) => setSearchTerm(e.target.value)}
+         />
+         <button
+          type="submit"
+          onClick={() => searchFoodItems(searchTerm)}
+          >Search</button>
+      </div>
       {
-        foodItems.length > 0 ? (
+        filteredItems.length > 0 ? (
         <div className="container">
-          {foodItems.map((item) => (<FoodItem key={item.id} item = {item}/>))}
+          {filteredItems.map((item : FoodItemType) => (
+            <FoodItem key={item.id} item = {item}/>
+            ))}
         </div>
         ) :
         (
