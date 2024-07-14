@@ -26,6 +26,27 @@
         "name": "Taco",
         "price": 5.99,
         "calories": 500
+    },
+    {
+        "id": 5,
+        "image": "/images/fries.jpg",
+        "name": "Fries",
+        "price": 3.99,
+        "calories": 327
+    },
+    {
+        "id": 6,
+        "image": "/images/soda.jpg",
+        "name": "Soda",
+        "price": 2.99,
+        "calories": 105
+    },
+    {
+        "id": 7,
+        "image": "/images/wings.jpg",
+        "name": "wings",
+        "price": 5.99,
+        "calories": 555
     }
 
 

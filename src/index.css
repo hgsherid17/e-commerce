@@ -64,22 +64,39 @@ button {
   margin: 1em;
 }
 .container {
+  width: 100%;
+  margin-top: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  /*
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: center;*/
 }
 
 .foodItem {
+  width: 310px;
+  height: 460px;
+  margin: 1.5rem;
+  padding: 1em;
+
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
   background-color: rgb(98,111, 168);
-  border: 1px solid black;
+  /*border: 1px solid black;
   border-radius: 5em;
   padding: 3em;
   color:black;
   flex: 0 1 calc(50% - 2em); 
   margin: 1em; 
 
-  position: relative;
+  position: relative;*/
 
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);
   box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
@@ -90,7 +107,7 @@ button {
   transform: scale(1.05, 1.05);
 }
 .foodItemImage img {
-  width: 500px;
+  width: 300px;
   height: auto;
 }
 .foodItemInfo h3 {
