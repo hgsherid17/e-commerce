@@ -6,8 +6,6 @@ export interface FoodItemType {
     calories: number;
 }
 
-export interface Items {
-    items: FoodItemType[];
-}
-
 export type SearchTermType = string;
+
+export type CartType = FoodItemType[];

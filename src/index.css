@@ -82,7 +82,7 @@ button {
   width: 310px;
   height: 460px;
   margin: 1.5rem;
-  padding: 1em;
+  padding: 2em;
 
   position: relative;
   border-radius: 12px;
@@ -107,8 +107,8 @@ button {
   transform: scale(1.05, 1.05);
 }
 .foodItemImage img {
-  width: 300px;
-  height: auto;
+  width: auto;
+  height: 200px;
 }
 .foodItemInfo h3 {
   font-size: 2em;
