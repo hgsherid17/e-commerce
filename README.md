@@ -4,3 +4,4 @@ This application represents a simple e-commerce application that allows you to s
 ### Current Features
 - Display food items
 - Search for specific food items
+- Add items to cart
