@@ -61,7 +61,7 @@ const App: React.FC = ()  => {
   return (
     <div className = "app">
       <div className ="topBar">
-        <button className = "openCart" onClick={() => toggleCart()}>{isCartOpen ? 'Close Cart' : 'Open Cart'}</button>
+        <button className = "openCart" onClick={() => toggleCart()}>Open Cart</button>
       </div>
       <h1>E-Commerce Application</h1>
 

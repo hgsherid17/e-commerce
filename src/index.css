@@ -51,19 +51,6 @@ input {
   color: black;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-  margin: 1em;
-}
-
 /** FOOD ITEM COMPONENT **/
 .container {
   width: 100%;
@@ -155,6 +142,21 @@ button {
 
 
 /** BUTTONS **/
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  margin: 1em;
+}
+.toggleCart {
+  margin-left: -20px;
+}
 button:hover {
   border-color: #646cff;
   background-color: rgb(39, 64, 87);

@@ -13,6 +13,9 @@ interface CartProperties {
 const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, isOpen, toggle}) => {
     return (
         <div className = "cart">
+
+            <button className = "toggleCart" onClick={() => toggle()}>X</button>
+
             <div className ="cartInfo">
                 <h2>Cart: </h2>
                     {cart.map((item) => (
@@ -25,8 +28,6 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, isOpen, 
                 <p><b>Tax:</b> ${currentTax.toFixed(2)}</p>
                 <p className = "total"><b>Total:</b> ${(totalPrice + currentTax).toFixed(2)}</p>
             </div>
-
-            <button className = "toggleCart" onClick={() => toggle()}>Close Cart</button>
 
         </div>
 
