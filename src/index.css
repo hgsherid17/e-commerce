@@ -63,6 +63,8 @@ button {
   transition: border-color 0.25s;
   margin: 1em;
 }
+
+/** FOOD ITEM COMPONENT **/
 .container {
   width: 100%;
   margin-top: 3rem;
@@ -117,6 +119,21 @@ button {
   font-size: 1.5em;
 }
 
+/** CART **/
+.cart {
+  border: 1px solid black;
+  border-radius: 1em;
+  margin-left: 6em;
+  margin-right: 6em;
+  margin-bottom: 2em;
+}
+.cart .total {
+  font-size: 1.2em;
+  background-color: lightblue;
+}
+
+
+/** BUTTONS **/
 button:hover {
   border-color: #646cff;
   background-color: rgb(39, 64, 87);

@@ -1,3 +1,4 @@
+// Represents a food item
 export interface FoodItemType {
     id: number;
     image: string;
@@ -6,6 +7,12 @@ export interface FoodItemType {
     calories: number;
 }
 
-export type SearchTermType = string;
+// Represents a "cart" full of food items and a total price
+export interface CartType {
+    items: FoodItemType[];
+    total: number;
+}
 
-export type CartType = FoodItemType[];
+export type SearchTermType = string;
+export type count = number;
+
