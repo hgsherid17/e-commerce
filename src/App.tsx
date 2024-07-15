@@ -62,17 +62,6 @@ const App: React.FC = ()  => {
     <div className = "app">
       <div className ="topBar">
         <button className = "openCart" onClick={() => toggleCart()}>{isCartOpen ? 'Close Cart' : 'Open Cart'}</button>
-
-        { isCartOpen && (
-        // TODO: Create popup instead using isOpen and toggle... somehow
-        <Cart 
-          cart = {cart}
-          totalPrice = {totalPrice}
-          currentTax = {currentTax}
-          isOpen = {isCartOpen}
-          toggle = {toggleCart}
-        />)
-        } 
       </div>
       <h1>E-Commerce Application</h1>
 
@@ -103,6 +92,19 @@ const App: React.FC = ()  => {
           </div>
         )
       }
+      { isCartOpen && (
+        <div>
+        <div className = "overlay" onClick = {toggleCart}></div>
+        
+        <Cart 
+          cart = {cart}
+          totalPrice = {totalPrice}
+          currentTax = {currentTax}
+          isOpen = {isCartOpen}
+          toggle = {toggleCart}
+        />
+        </div>
+        )}
     </div>
   );
 };

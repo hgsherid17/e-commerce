@@ -25,6 +25,9 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, isOpen, 
                 <p><b>Tax:</b> ${currentTax.toFixed(2)}</p>
                 <p className = "total"><b>Total:</b> ${(totalPrice + currentTax).toFixed(2)}</p>
             </div>
+
+            <button className = "toggleCart" onClick={() => toggle()}>Close Cart</button>
+
         </div>
 
 
