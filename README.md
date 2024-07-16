@@ -1,14 +1,16 @@
 # E-Commerce Application
 This application represents a simple e-commerce application that allows you to search for food items, add them to cart, and checkout.
 
+## Project Information
+> **BUGS**
+> 
+> * Cart displays "-0.00" as price if the last item is removed
+> * Kinda a bug but also not: Cart does not allow you to add multiple of the same item
+
 ### Current Features
 - Display food items
 - Search for specific food items
 - Add items to cart
-
-> BUGS!
-- Cart displays "-0.00" as price if the last item is removed
-- Kinda a bug but also not: Cart does not allow you to add multiple of the same item
 
 ### Current Fixes
 - Organize more `App.tsx` features into components
