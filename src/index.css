@@ -155,7 +155,7 @@ button {
   margin: 1em;
 }
 .toggleCart {
-  margin-left: -20px;
+  margin-right: -200px;
 }
 button:hover {
   border-color: #646cff;

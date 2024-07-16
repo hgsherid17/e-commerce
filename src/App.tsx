@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {BrowserRouter as Router, Route } from 'react-router-dom';
 import FoodItem from './Components/FoodItem.tsx';
 import Cart from './Components/Cart.tsx';
 import { FoodItemType, SearchTermType, CartType } from './types.ts';
@@ -12,6 +13,7 @@ const App: React.FC = ()  => {
   const [cart, setCart] = useState<FoodItemType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [currentTax, setCurrentTax] = useState<number>(0);
+
   const tax = 0.04;
 
   /**
@@ -33,9 +35,15 @@ const App: React.FC = ()  => {
     const addedItem = foodItems.find(item => item.id === id);
 
     if (addedItem) {
-        setCart(prevCart => [...prevCart, addedItem] );
-        setTotalPrice(prevTotal => prevTotal + addedItem.price);
-        console.log("added item " + id + " to cart");
+        if (cart.find(item => addedItem === item)) {
+          console.log("Item already added: " + addedItem.name);
+        }
+        else {
+          setCart(prevCart => [...prevCart, addedItem] );
+          setTotalPrice(prevTotal => prevTotal + addedItem.price);
+          console.log("Added item " + addedItem.name + " to cart");
+        } 
+        
     }
     else {
       console.error("could not find item " + id);
@@ -44,6 +52,24 @@ const App: React.FC = ()  => {
     // TODO: If user adds the same item multiple times, print the number of that item
     // in the cart rather than the same item multiple times (e.g. 3x Wings - $5.99)
   };
+
+  /**
+   * Removes a given food item by id from an array representing a cart
+   * @param id 
+   */
+  const removeFromCart = (id: number) => {
+    const itemToRemove = cart.find(item => item.id === id);
+    if (itemToRemove) {
+      const updatedCart = cart.filter((item) => itemToRemove !== item);
+      setCart(updatedCart);
+      setTotalPrice(prevTotal => prevTotal - itemToRemove.price);
+
+      console.log("Removed item: " + itemToRemove.id + " from cart")
+    }
+    else {
+      console.error("Item with id: " + id + "is not in the cart");
+    }
+  }
 
   /**
    * Opens and closes the "cart" popup
@@ -56,13 +82,16 @@ const App: React.FC = ()  => {
   // Automatically update tax when item is added
   useEffect(() => {
     setCurrentTax(totalPrice * tax);
-  }, [totalPrice])
+    setCart(cart);
+  }, [totalPrice, cart])
 
   return (
+    <Router>
     <div className = "app">
       <div className ="topBar">
         <button className = "openCart" onClick={() => toggleCart()}>Open Cart</button>
       </div>
+      
       <h1>E-Commerce Application</h1>
 
       <div className = "search">
@@ -102,10 +131,12 @@ const App: React.FC = ()  => {
           currentTax = {currentTax}
           isOpen = {isCartOpen}
           toggle = {toggleCart}
+          removeFromCart={removeFromCart}
         />
         </div>
         )}
     </div>
+    </Router>
   );
 };
 
