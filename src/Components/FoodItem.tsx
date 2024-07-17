@@ -14,19 +14,6 @@ interface FoodItemProperties {
  * @returns 
  */
 const FoodItem : React.FC<FoodItemProperties> = ({ item, addToCart }) => {
-    const [count, setCount] = useState<number>(0);
-
-    const increment = () => {
-        // User may enter only 20 items
-        if (count < 20) {
-            setCount(prevCount => count + 1);
-        }
-    }
-    const decrement = () => {
-        if (count > 0) {
-            setCount(prevCount => count - 1);
-        }
-    }
 
     // REMINDER: chekc if count zero. If zero, remove from cart
     return (

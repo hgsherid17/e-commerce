@@ -1,17 +1,16 @@
 // POPUP SRC: GeeksForGeeks
-import React from 'react';
+import React, { useState } from 'react';
 import { FoodItemType } from '../types';
 
 interface CartProperties {
     cart: FoodItemType[];
     totalPrice: number;
     currentTax: number;
-    isOpen: boolean;
     toggle: () => void;
     removeFromCart: (id: number) => void;
 }
-const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, isOpen, toggle, removeFromCart}) => {
-    
+const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, toggle, removeFromCart}) => {
+
     return (
         <div className = "cart">
 
@@ -22,6 +21,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, isOpen, 
                     {cart.map((item) => (
                     <div key={item.id}>
                         <p>{item.name} - ${item.price}</p>
+                        
                         <button className = "removeFromCart" onClick = {() => removeFromCart(item.id)}>Remove From Cart</button>
                     </div>
                     ))}

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import {BrowserRouter as Router, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FoodItem from './Components/FoodItem.tsx';
 import Cart from './Components/Cart.tsx';
-import { FoodItemType, SearchTermType, CartType } from './types.ts';
+import { FoodItemType, SearchTermType } from './types.ts';
 import foodItems from './data/foodItems.json'; // Static data does not need useState
+import Menu from './Pages/Menu.tsx';
+import NavBar from './Components/NavBar.tsx';
+
+// TODO: Change to pass in FoodItem instead of id?
 
 const App: React.FC = ()  => {
-  const [searchTerm, setSearchTerm] = useState<SearchTermType>("");
-  const [filteredItems, setFilteredItems] = useState<FoodItemType[]>(foodItems);
 
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [cart, setCart] = useState<FoodItemType[]>([]);
@@ -17,27 +19,20 @@ const App: React.FC = ()  => {
   const tax = 0.04;
 
   /**
-   * Searches json of food items given a specific search term
-   * @param term 
-   */
-  const searchFoodItems = async(term: string) => {
-    setSearchTerm(term);
-    const filtered = foodItems.filter(item => 
-      item.name.toLowerCase().includes(term.toLowerCase()));
-      setFilteredItems(filtered);
-  };
-
-  /**
    * Adds a given food item by id to an array representing a cart
    * @param id 
    */
   const addToCart = (id: number) => {
     const addedItem = foodItems.find(item => item.id === id);
+    //const itemIndex = cart.findIndex(item => item.id === id);
 
+    // If item exists
     if (addedItem) {
+        // If item is already in cart, increment count
         if (cart.find(item => addedItem === item)) {
           console.log("Item already added: " + addedItem.name);
         }
+        // Otherwise, add to cart with count of one
         else {
           setCart(prevCart => [...prevCart, addedItem] );
           setTotalPrice(prevTotal => prevTotal + addedItem.price);
@@ -82,45 +77,19 @@ const App: React.FC = ()  => {
   // Automatically update tax when item is added
   useEffect(() => {
     setCurrentTax(totalPrice * tax);
-    setCart(cart);
-  }, [totalPrice, cart])
+  }, [totalPrice])
 
   return (
-    <Router>
-    <div className = "app">
-      <div className ="topBar">
-        <button className = "openCart" onClick={() => toggleCart()}>Open Cart</button>
-      </div>
-      
-      <h1>E-Commerce Application</h1>
 
-      <div className = "search">
-        <input 
-          placeholder = "Search for food..."
-          value = {searchTerm}
-          // If we want to search automatically,
-          // change to "searchFoodItems"
-          onChange={(e) => setSearchTerm(e.target.value)}
-         />
-         <button
-          type="submit"
-          onClick={() => searchFoodItems(searchTerm)}
-          >Search</button>
-      </div>
-      {
-        filteredItems.length > 0 ? (
-        <div className="container">
-          {filteredItems.map((item : FoodItemType) => (
-            <FoodItem key={item.id} item = {item} addToCart = {addToCart}/>
-            ))}
-        </div>
-        ) :
-        (
-          <div className="404">
-            <h2>No food items found</h2>
-          </div>
-        )
-      }
+    <div className = "app">
+
+      <NavBar toggleCart = {toggleCart} cartCount = {cart.length}/>
+
+      <Routes>
+        <Route path="/menu" element={<Menu addToCart = {addToCart} />} />
+      </Routes>
+   
+
       { isCartOpen && (
         <div>
         <div className = "overlay" onClick = {toggleCart}></div>
@@ -129,14 +98,15 @@ const App: React.FC = ()  => {
           cart = {cart}
           totalPrice = {totalPrice}
           currentTax = {currentTax}
-          isOpen = {isCartOpen}
           toggle = {toggleCart}
           removeFromCart={removeFromCart}
         />
         </div>
         )}
+      
+      <footer>Copyright Hannarby's Enterprises 2024 lol</footer>
+
     </div>
-    </Router>
   );
 };
 

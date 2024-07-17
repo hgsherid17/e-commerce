@@ -7,12 +7,5 @@ export interface FoodItemType {
     calories: number;
 }
 
-// Represents a "cart" full of food items and a total price
-export interface CartType {
-    items: FoodItemType[];
-    total: number;
-}
-
 export type SearchTermType = string;
-export type count = number;
 
