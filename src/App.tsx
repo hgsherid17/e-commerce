@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FoodItem from './Components/FoodItem.tsx';
 import Cart from './Components/Cart.tsx';
-import { FoodItemType, SearchTermType } from './types.ts';
+import { CartItemType, FoodItemType, CartType } from './types.ts';
 import foodItems from './data/foodItems.json'; // Static data does not need useState
 import Menu from './Pages/Menu.tsx';
 import NavBar from './Components/NavBar.tsx';
@@ -11,12 +11,18 @@ import NavBar from './Components/NavBar.tsx';
 
 const App: React.FC = ()  => {
 
+  // TODO: Update cart item count bruv
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
-  const [cart, setCart] = useState<FoodItemType[]>([]);
+  const [cart, setCart] = useState<CartItemType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [currentTax, setCurrentTax] = useState<number>(0);
+  const [cartCount, setCartCount] = useState<number>(0);
 
   const tax = 0.04;
+
+  const toCartItemType = (item: FoodItemType): CartItemType => {
+   return Object.assign(item, {quantity: 1});
+  }
 
   /**
    * Adds a given food item by id to an array representing a cart
@@ -24,24 +30,28 @@ const App: React.FC = ()  => {
    */
   const addToCart = (id: number) => {
     const addedItem = foodItems.find(item => item.id === id);
-    //const itemIndex = cart.findIndex(item => item.id === id);
-
+    // const itemIndex = cart.findIndex(item => item.id === id);
     // If item exists
     if (addedItem) {
         // If item is already in cart, increment count
-        if (cart.find(item => addedItem === item)) {
-          console.log("Item already added: " + addedItem.name);
+        const isInCart = cart.find((item => addedItem === item));
+        if (isInCart) {
+          isInCart.quantity += 1;
+          console.log("New quantity of cart item " + isInCart.name + ": " + isInCart.quantity);
         }
-        // Otherwise, add to cart with count of one
+        // Otherwise, convert to cart item type add to cart with count of one
         else {
-          setCart(prevCart => [...prevCart, addedItem] );
-          setTotalPrice(prevTotal => prevTotal + addedItem.price);
-          console.log("Added item " + addedItem.name + " to cart");
+          const cartItem = toCartItemType(addedItem);
+          setCart(prevCart => [...prevCart, cartItem]);
+
+          console.log("Added item " + cartItem.name + " to cart. Quantity: " + cartItem.quantity);
         } 
-        
+
+        setTotalPrice(prevTotal => prevTotal + addedItem.price);
+        setCartCount(cartCount + 1);
     }
     else {
-      console.error("could not find item " + id);
+      console.error("Could not find item " + id);
     }
 
     // TODO: If user adds the same item multiple times, print the number of that item
@@ -57,8 +67,8 @@ const App: React.FC = ()  => {
     if (itemToRemove) {
       const updatedCart = cart.filter((item) => itemToRemove !== item);
       setCart(updatedCart);
-      setTotalPrice(prevTotal => prevTotal - itemToRemove.price);
-
+      setTotalPrice(prevTotal => prevTotal - (itemToRemove.price * itemToRemove.quantity));
+      setCartCount(cartCount - itemToRemove.quantity);
       console.log("Removed item: " + itemToRemove.id + " from cart")
     }
     else {
@@ -66,29 +76,35 @@ const App: React.FC = ()  => {
     }
   }
 
+  const updateItemQuantity = (id: number, quantity: number) => {
+    setCart(prevCart => 
+      prevCart.map(item => 
+        item.id === id ? { ...item, quantity: quantity } : item
+    ));
+  }
+
   /**
    * Opens and closes the "cart" popup
    */
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
-    console.log("Is cart open: " + isCartOpen);
+    console.log("Is cart open: " + !isCartOpen);
   };
 
   // Automatically update tax when item is added
   useEffect(() => {
     setCurrentTax(totalPrice * tax);
-  }, [totalPrice])
+  }, [totalPrice] )
 
   return (
 
     <div className = "app">
 
-      <NavBar toggleCart = {toggleCart} cartCount = {cart.length}/>
+      <NavBar toggleCart = {toggleCart} cartCount = {cartCount}/>
 
       <Routes>
         <Route path="/menu" element={<Menu addToCart = {addToCart} />} />
       </Routes>
-   
 
       { isCartOpen && (
         <div>
@@ -97,9 +113,13 @@ const App: React.FC = ()  => {
         <Cart 
           cart = {cart}
           totalPrice = {totalPrice}
+          setTotalPrice = {setTotalPrice}
           currentTax = {currentTax}
+          cartCount = {cartCount}
+          setCartCount = {setCartCount}
           toggle = {toggleCart}
           removeFromCart={removeFromCart}
+          updateItemQuantity={updateItemQuantity}
         />
         </div>
         )}

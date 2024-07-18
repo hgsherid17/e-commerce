@@ -7,5 +7,16 @@ export interface FoodItemType {
     calories: number;
 }
 
+export interface CartItemType extends FoodItemType {
+    quantity: number;
+}
+
+export interface CartType {
+    items: CartItemType[];
+    totalPrice: number;
+    count: number;
+}
+
 export type SearchTermType = string;
+
 
