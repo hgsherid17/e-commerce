@@ -1,5 +1,5 @@
 // POPUP SRC: GeeksForGeeks
-import React, { useState, SetStateAction } from 'react';
+import React, { SetStateAction } from 'react';
 import { CartItemType } from '../types';
 
 interface CartProperties {
