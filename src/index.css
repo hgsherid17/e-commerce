@@ -31,13 +31,13 @@ body {
   text-align: center;
   background-color: rgb(227, 233, 248);
 }
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
   background-color: skyblue;
-  padding: 1em;
+  padding-left: 1em;
 }
+
 input {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -110,6 +110,75 @@ input {
 }
 .price {
   font-size: 1.5em;
+}
+
+/** PROMOTIONS **/
+.promoContainer {
+  width: 100%;
+  margin-top: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  /*
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;*/
+}
+.promoItem {
+  width: 460px;
+  height: 360px;
+  margin: 1.5rem;
+  padding: 2em;
+
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  background-color: white;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);
+  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+.promoImage img {
+  width: auto;
+  height: 200px;
+}
+
+.home h1 {
+  color: rgb(82, 190, 226);
+  background-color: transparent;
+  text-transform: uppercase;
+  text-align: left;
+  font-family: 'Impact', fantasy;
+}
+
+.home h2 {
+  text-transform: uppercase;
+  font-family: 'Impact', fantasy;
+}
+
+.promoItem:hover {
+  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05, 1.05);
+}
+
+.goToMenu {
+  width: 460px;
+  height: 360px;
+  margin: 1.5rem;
+  padding: 2em;
+
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  background-color: white;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);
+  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
+  color: black;
 }
 
 /** NAV BAR **/

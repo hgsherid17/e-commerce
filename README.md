@@ -4,6 +4,8 @@ This application represents a simple e-commerce application that allows you to s
 ## Project Information
 > **BUGS**
 >
+> * [!!!] If you add the same item from categories then from view all, it treats it as two separate items
+> * [!!!] Remove from cart then will add to cart instead
 > * [!!!] Cart displays "-0.00" as price if the last item is removed
 > * [!!] User can add more than 20 of one item to cart
 > * [!] Cart with number badge needs to be turned into a div so both can be clicked

@@ -4,13 +4,16 @@ import Cart from './Components/Cart.tsx';
 import { CartItemType, FoodItemType} from './types.ts';
 import foodItems from './data/foodItems.json'; // Static data does not need useState
 import Menu from './Pages/Menu.tsx';
+import MenuCategory from './Pages/MenuCategory.tsx';
+import MenuAll from './Pages/MenuAll.tsx';
+import Home from './Pages/Home.tsx';
 import NavBar from './Components/NavBar.tsx';
 
+// TODO: Make less ugly bruv
 // TODO: Change to pass in FoodItem instead of id?
 
 const App: React.FC = ()  => {
-
-  // TODO: Update cart item count bruv
+  const allItems = Object.values(foodItems).flat();
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [cart, setCart] = useState<CartItemType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -28,7 +31,7 @@ const App: React.FC = ()  => {
    * @param id 
    */
   const addToCart = (id: number) => {
-    const addedItem = foodItems.find(item => item.id === id);
+    const addedItem = allItems.find(item => item.id === id);
     // const itemIndex = cart.findIndex(item => item.id === id);
     // If item exists
     if (addedItem) {
@@ -52,9 +55,6 @@ const App: React.FC = ()  => {
     else {
       console.error("Could not find item " + id);
     }
-
-    // TODO: If user adds the same item multiple times, print the number of that item
-    // in the cart rather than the same item multiple times (e.g. 3x Wings - $5.99)
   };
 
   /**
@@ -93,7 +93,8 @@ const App: React.FC = ()  => {
   // Automatically update tax when item is added
   useEffect(() => {
     setCurrentTax(totalPrice * tax);
-  }, [totalPrice] )
+    setCart(cart);
+  }, [totalPrice, cart])
 
   return (
 
@@ -102,7 +103,10 @@ const App: React.FC = ()  => {
       <NavBar toggleCart = {toggleCart} cartCount = {cartCount}/>
 
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu addToCart = {addToCart} />} />
+        <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
+        <Route path="/menu/all" element={<MenuAll addToCart = {addToCart}/>} />
       </Routes>
 
       { isCartOpen && (

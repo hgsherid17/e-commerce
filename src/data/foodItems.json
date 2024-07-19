@@ -1,46 +1,50 @@
-[
+{
+    "Burgers": [
     {
         "id": 1,
         "image": "/images/burger.jpg",
         "name": "Burger",
         "price": 9.99,
         "calories": 777
-    },
+    }
+],
+"Sandwiches": [
     {
         "id": 2,
         "image": "/images/sandwich.jpg",
         "name": "Sandwich",
         "price": 7.99,
         "calories": 500
-    },
+    }
+],
+"Salads": [
     {
         "id": 3,
         "image": "/images/salad.jpg",
         "name": "Salad",
         "price": 8.99,
         "calories": 777
-    },
+    }
+], 
+"Sides": [
     {
         "id": 4,
-        "image": "/images/taco.jpg",
-        "name": "Taco",
-        "price": 5.99,
-        "calories": 500
-    },
-    {
-        "id": 5,
         "image": "/images/fries.jpg",
         "name": "Fries",
         "price": 3.99,
         "calories": 327
-    },
+    }
+], 
+"Drinks": [
     {
         "id": 6,
         "image": "/images/soda.jpg",
         "name": "Soda",
         "price": 2.99,
         "calories": 105
-    },
+    }
+],
+"Wings": [
     {
         "id": 7,
         "image": "/images/wings.jpg",
@@ -48,6 +52,5 @@
         "price": 5.99,
         "calories": 555
     }
-
-
 ]
+}

@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "image": "./images/BOGOBurgers.png",
+        "description": "Buy one get one free burgers and sandwiches!",
+        "type": "BOGO",
+        "applicableItems": [1, 2]
+    },
+    {
+        "id": 2,
+        "image": "",
+        "description": "Free soda with any order of wings!", 
+        "type": "FREEITEM",
+        "applicableItems": [7]
+    }
+
+]
