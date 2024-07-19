@@ -12,14 +12,15 @@ const Menu: React.FC<MenuProperties> = ({addToCart})  => {
     return (
     
         <div className = "menu">
+            <h1>MENU</h1>
 
-            <div className = "categoriesList">
+            <div className = "container">
                 {
                     Object.keys(foodItems).map(category => (
-                        <FoodCategory key={category} category={category} numItems={categories[category].length} />
+                        <FoodCategory key={category} category={category} numItems={categories[category].items.length} image={categories[category].image} />
                     ))
                 } 
-                <div>
+                <div className = "category">
                     <h2>View all</h2>
 
                     <p>{allItems.length} Items</p>

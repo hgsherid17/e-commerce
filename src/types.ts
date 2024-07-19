@@ -7,8 +7,13 @@ export interface FoodItemType {
     calories: number;
 }
 
+export interface CategoryType {
+    image: string;
+    items: FoodItemType[];
+}
 export interface FoodItemCategories {
-    [category: string]: FoodItemType[];
+    [category: string]: CategoryType;
+
 }
 
 export interface CartItemType extends FoodItemType {
@@ -20,6 +25,7 @@ export interface CartType {
     totalPrice: number;
     count: number;
 }
+
 export interface PromoType {
     id: number;
     image: string;
@@ -31,6 +37,7 @@ export interface PromoType {
 export interface MenuProperties {
     addToCart: (id: number) => void;
 }
+
 
 export type SearchTermType = string;
 

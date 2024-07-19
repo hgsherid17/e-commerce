@@ -2,6 +2,7 @@ import React from 'react';
 import promos from '../data/promotions.json';
 import Promotion from '../Components/Promotion.tsx';
 import { PromoType } from '../types.ts';
+import { Link } from 'react-router-dom';
 
 interface HomeProperties {
 
@@ -31,9 +32,10 @@ const Home: React.FC<HomeProperties> = ()  => {
 
             <div className = "menuHome">
                 <h1>Menu</h1>
-                
+                <div className ="container">
                 <div className="goToMenu">
-                    <h2>Go to Menu</h2>
+                    <Link to ="/menu">Go to Menu</Link>
+                </div>
                 </div>
 
             </div>

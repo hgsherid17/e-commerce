@@ -4,17 +4,21 @@ import { Link } from 'react-router-dom';
 interface FoodCategoryProperties {
     category: string;
     numItems: number;
+    image: string;
 }
-const FoodCategory: React.FC<FoodCategoryProperties> = ({category, numItems}) => {
+const FoodCategory: React.FC<FoodCategoryProperties> = ({category, numItems, image}) => {
 
     return (
 
         <div className = "category">
-            <h2>{category}</h2>
+            <img src={image} />
+            <div className="content">
+                <h2>{category}</h2>
 
-            <p>{numItems} Items</p>
+                <p>{numItems} Items</p>
 
-            <p><Link to={`/menu/${category}`}>View Items</Link></p>
+                <p><Link to={`/menu/${category}`}>View Items</Link></p>
+            </div>
 
         </div>
     )

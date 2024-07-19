@@ -1,13 +1,15 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import foodItems from '../data/foodItems.json'
-import { FoodItemCategories, FoodItemType, MenuProperties } from '../types';
+import { CategoryType, FoodItemCategories, FoodItemType, MenuProperties } from '../types';
 import FoodItem from '../Components/FoodItem.tsx'
 
 const MenuCategory : React.FC<MenuProperties> = ({addToCart}) => {
     const { category } = useParams<{ category: string }>();
     const categories = foodItems as FoodItemCategories;
-    const items = categories[category as keyof FoodItemCategories] || [];
+    const data = categories[category as keyof FoodItemCategories] || [];
+
+    const { image, items } = data;
 
     return (
         <div className = "menuCategory">

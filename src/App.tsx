@@ -10,10 +10,16 @@ import Home from './Pages/Home.tsx';
 import NavBar from './Components/NavBar.tsx';
 
 // TODO: Make less ugly bruv
-// TODO: Change to pass in FoodItem instead of id? NO!!!!! NO.
+// TODO: Pass in category object to FoodCategory component rather than all its info
+
+const getAllFoodItems  = (categories: { [key: string]: { items: FoodItemType[] } }) => {
+  // Flatten food items json to get all items from each category
+  return Object.values(categories).flatMap(category => category.items);
+}
 
 const App: React.FC = ()  => {
-  const allItems = Object.values(foodItems).flat();
+  const allItems = getAllFoodItems(foodItems);
+
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [cart, setCart] = useState<CartItemType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -105,7 +111,7 @@ const App: React.FC = ()  => {
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu addToCart = {addToCart} />} />
         <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
-        <Route path="/menu/all" element={<MenuAll addToCart = {addToCart}/>} />
+        <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
       </Routes>
 
       { isCartOpen && (

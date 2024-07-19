@@ -8,7 +8,7 @@
     },
     {
         "id": 2,
-        "image": "",
+        "image": "./images/FreeSodaPromo.png",
         "description": "Free soda with any order of wings!", 
         "type": "FREEITEM",
         "applicableItems": [7]

@@ -5,8 +5,12 @@ import { MenuProperties, SearchTermType, FoodItemType } from '../types';
 import { Link } from 'react-router-dom';
 
 
-const MenuAll : React.FC<MenuProperties> = ({addToCart}) => {
-    const allItems = Object.values(foodItems).flat();
+interface MenuAllProperties extends MenuProperties{
+    getAllFoodItems: (categories: { [key: string]: { items: FoodItemType[] } }) => FoodItemType[];
+}
+
+const MenuAll : React.FC<MenuAllProperties> = ({addToCart, getAllFoodItems}) => {
+    const allItems = getAllFoodItems(foodItems);
     const [searchTerm, setSearchTerm] = useState<SearchTermType>("");
     const [filteredItems, setFilteredItems] = useState<FoodItemType[]>(allItems);
 
@@ -15,9 +19,6 @@ const MenuAll : React.FC<MenuProperties> = ({addToCart}) => {
      * @param term 
      */
     const searchFoodItems = async(term: string) => {
-        // Flatten food item data
-        const allItems = Object.values(foodItems).flat();
-
         const filtered = allItems.filter(item => 
         item.name.toLowerCase().includes(term.toLowerCase()));
         setFilteredItems(filtered);

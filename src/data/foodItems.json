@@ -1,5 +1,7 @@
 {
-    "Burgers": [
+    "Burgers": {
+        "image": "/images/burger.jpg",
+        "items": [
     {
         "id": 1,
         "image": "/images/burger.jpg",
@@ -7,8 +9,11 @@
         "price": 9.99,
         "calories": 777
     }
-],
-"Sandwiches": [
+]
+},
+"Sandwiches": {
+    "image": "/images/sandwich.jpg",
+    "items": [
     {
         "id": 2,
         "image": "/images/sandwich.jpg",
@@ -16,8 +21,10 @@
         "price": 7.99,
         "calories": 500
     }
-],
-"Salads": [
+]},
+"Salads": {
+    "image":"/images/salad.jpg",
+    "items": [
     {
         "id": 3,
         "image": "/images/salad.jpg",
@@ -25,8 +32,10 @@
         "price": 8.99,
         "calories": 777
     }
-], 
-"Sides": [
+]}, 
+"Sides": {
+    "image": "/images/fries.jpg",
+    "items": [
     {
         "id": 4,
         "image": "/images/fries.jpg",
@@ -34,8 +43,10 @@
         "price": 3.99,
         "calories": 327
     }
-], 
-"Drinks": [
+]}, 
+"Drinks": {
+    "image": "/images/soda.jpg",
+    "items": [
     {
         "id": 6,
         "image": "/images/soda.jpg",
@@ -43,8 +54,10 @@
         "price": 2.99,
         "calories": 105
     }
-],
-"Wings": [
+]},
+"Wings": {
+    "image": "/images/wings.jpg",
+    "items": [
     {
         "id": 7,
         "image": "/images/wings.jpg",
@@ -52,5 +65,5 @@
         "price": 5.99,
         "calories": 555
     }
-]
+]}
 }
