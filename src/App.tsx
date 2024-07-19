@@ -10,7 +10,7 @@ import Home from './Pages/Home.tsx';
 import NavBar from './Components/NavBar.tsx';
 
 // TODO: Make less ugly bruv
-// TODO: Change to pass in FoodItem instead of id?
+// TODO: Change to pass in FoodItem instead of id? NO!!!!! NO.
 
 const App: React.FC = ()  => {
   const allItems = Object.values(foodItems).flat();
@@ -32,14 +32,13 @@ const App: React.FC = ()  => {
    */
   const addToCart = (id: number) => {
     const addedItem = allItems.find(item => item.id === id);
-    // const itemIndex = cart.findIndex(item => item.id === id);
     // If item exists
     if (addedItem) {
         // If item is already in cart, increment count
-        const isInCart = cart.find((item => addedItem === item));
-        if (isInCart) {
-          isInCart.quantity += 1;
-          console.log("New quantity of cart item " + isInCart.name + ": " + isInCart.quantity);
+        const itemIndex = cart.findIndex(item => item.id === id);
+        if (itemIndex >= 0) {
+          cart[itemIndex].quantity += 1;
+          console.log("New quantity of cart item " + cart[itemIndex].name + ": " + cart[itemIndex].quantity);
         }
         // Otherwise, convert to cart item type add to cart with count of one
         else {
@@ -50,7 +49,7 @@ const App: React.FC = ()  => {
         } 
 
         setTotalPrice(prevTotal => prevTotal + addedItem.price);
-        setCartCount(cartCount + 1);
+        setCartCount(prevCount => prevCount + 1);
     }
     else {
       console.error("Could not find item " + id);
@@ -64,7 +63,7 @@ const App: React.FC = ()  => {
   const removeFromCart = (id: number) => {
     const itemToRemove = cart.find(item => item.id === id);
     if (itemToRemove) {
-      const updatedCart = cart.filter((item) => itemToRemove !== item);
+      const updatedCart = cart.filter(item => item.id !== id);
       setCart(updatedCart);
       setTotalPrice(prevTotal => prevTotal - (itemToRemove.price * itemToRemove.quantity));
       setCartCount(cartCount - itemToRemove.quantity);

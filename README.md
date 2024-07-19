@@ -4,7 +4,8 @@ This application represents a simple e-commerce application that allows you to s
 ## Project Information
 > **BUGS**
 >
-> * [!!!] If you add the same item from categories then from view all, it treats it as two separate items
+> * ~~[!!!] If you add the same item from categories then from view all, it treats it as two separate items~~
+> ~~-> Recreate: (1) Add a few items to bag a few times then add "Soda" to bag (2) Update quantity of items (3) Remove an item from bag (4) Add "Soda" from "View All" page~~
 > * [!!!] Remove from cart then will add to cart instead
 > * [!!!] Cart displays "-0.00" as price if the last item is removed
 > * [!!] User can add more than 20 of one item to cart
