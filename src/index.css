@@ -11,6 +11,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --main-font: 'Impact', fantasy;
+  --main-color: rgb(82, 190, 226);
+
+
 }
 
 a {
@@ -35,7 +40,7 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
   padding-left: 1em;
-  color: rgb(82, 190, 226);
+  color: var(--main-color);
   background-color: transparent;
   text-transform: uppercase;
   text-align: left;
@@ -83,7 +88,7 @@ input {
 }
 .category h2 {
   text-transform: uppercase;
-  font-family: 'Impact', fantasy;
+  font-family: var(--main-font); 
 }
 .category img {
   width: 100px;
@@ -99,11 +104,10 @@ input {
   align-items: center;
   flex-wrap: wrap;
   
-  /*
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;*/
+}
+.category:hover {
+  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05, 1.05);
 }
 
 .foodItem {
@@ -182,16 +186,16 @@ input {
 }
 
 .home h1 {
-  color: rgb(82, 190, 226);
+  color: var(--main-color);
   background-color: transparent;
   text-transform: uppercase;
   text-align: left;
-  font-family: 'Impact', fantasy;
+  font-family: var(--main-font);
 }
 
 .home h2 {
   text-transform: uppercase;
-  font-family: 'Impact', fantasy;
+  font-family: var(--main-font);
 }
 
 .promoItem:hover {
@@ -230,7 +234,7 @@ input {
 }
 
 .navBar h2 {
-  font-family: 'Impact', fantasy;
+  font-family: var(--main-font);
   text-transform: uppercase;
   background: -webkit-linear-gradient(#ffffff, rgb(82, 190, 226));
   background-clip: text;
@@ -240,23 +244,23 @@ input {
 }
 
 .link {
-  font-family: 'Impact', fantasy;
+  font-family: var(--main-font);
   text-transform: uppercase;
   font-size: 1.5em;
   color:white;
 }
 .activeLink {
-  font-family: 'Impact', fantasy;
+  font-family: var(--main-font);
   text-transform: uppercase;
   font-size: 1.5em;
-  color: rgb(82, 190, 226);
+  color: var(--main-color);
 }
 
 .link:hover {
-  color: rgb(82, 190, 226);
+  color: var(--main-color);
 }
 .activeLink:hover {
-  color: rgb(82, 190, 226);
+  color: var(--main-color);
 }
 
 
@@ -275,12 +279,13 @@ input {
   position: absolute;
   top: -10px;
   right: -10px;
-  background-color: rgb(82, 190, 226);
+  background-color: var(--main-color);
   color: white;
   border-radius: 50%;
   padding: 2px 8px;
   font-size: 12px;
 }
+
 .cart {
   border: 1px solid black;
   border-radius: 1em;
@@ -299,11 +304,114 @@ input {
   z-index: 20; /* So it appears above the overlay */
 }
 
-.cart .total {
-  font-size: 1.2em;
-  background-color: lightblue;
+.cartSummary {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
+.cartSummary .numItems {
+  margin-right: 20px;
+  margin-left: 2px;
+}
+
+.cartSummary .total {
+  /*display: flex;
+  flex-direction: column;
+  align-items: flex-end;*/
+  margin-left: auto;
+  text-align: right;
+  
+}
+.cartSummary .total p {
+  margin: 0;
+}
+
+.cartItems {
+  display:flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cartItem {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.itemInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.itemInfo img {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+.cartItemDetails {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.cartItemDetails .name {
+  text-transform: uppercase;
+  color: var(--main-color);
+}
+.cartItemDetails .number {
+
+}
+
+.itemControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+
+}
+.quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+}
+.quantity button {
+  padding: 5px 10px;
+  color: var(--main-color);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+}
+.quantity .disabled {
+  color: lightgray;
+}
+
+.quantity button:hover {
+  background-color: transparent;
+  
+}
+
+
+.removeFromCart {
+  padding: 5px 10px;
+  background-color: transparent;
+  cursor: pointer;
+  border:none;
+  text-transform: uppercase;
+  text-decoration: underline;
+}
+
+.removeFromCart:hover {
+  background-color: transparent;
+  text-decoration:none;
+}
 /* Overlay when cart is open */
 .overlay {
   position: fixed;

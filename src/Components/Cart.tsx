@@ -31,42 +31,68 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, curre
             setCartCount(cartCount - 1);
         }
     }
+    // TODO: Calculate tax at checkout
     return (
         <div className = "cart">
 
             <button className = "toggleCart" onClick={() => toggle()}>X</button>
 
-            <div className ="cartInfo">
-                <h2>Cart: </h2>
-                    {cart.map((item) => (
-                    <div key={item.id}>
-                        <p>{item.name} - ${Number(item.price * item.quantity).toFixed(2)}</p>
-                        
-                        <button className = "removeFromCart" onClick = {() => removeFromCart(item.id)}>Remove From Cart</button>
-                        
-                        <div className = "quantity">
-
-                            {item.quantity < 20 &&
-                                <button onClick = {() => increment(item)}>+</button>
-                            }
-
-                            <p>{item.quantity}</p>
-
-                            {item.quantity > 1 &&
-                                <button onClick = {() => decrement(item)}>-</button>
-                            }
-
-                        </div>
+           
+                <div className = "cartSummary">
+                    <h2>My Cart</h2>
+                    <p className = "numItems">{ cartCount } {cartCount == 1 ? "Item" : "Items"}</p>
+                    <div className = "total">
+                        <p>Total</p>
+                        <p>${(totalPrice).toFixed(2)}</p>
                     </div>
-                    ))}
-                <p><b>Number of items in cart:</b> {cartCount}</p>
-                <p><b>Price of items:</b> ${totalPrice.toFixed(2)}</p>
-                <p><b>Tax:</b> ${currentTax.toFixed(2)}</p>
-                <p className = "total"><b>Total:</b> ${(totalPrice + currentTax).toFixed(2)}</p>
+                </div>
+                <hr></hr>
+                    <div className="cartItems">
+                        {cart.map((item) => (
+                        <div key={item.id} className="cartItem">
+                            <div className="itemInfo">
+                                <img src={item.image}></img>
+                                <div className="cartItemDetails">
+                                    <b><p className ="name">{item.name}</p></b>
+                                    <p className="number">${Number(item.price * item.quantity).toFixed(2)}</p>
+                                </div>
+                            </div>
+                            <div className ="itemControls">
+                                <div className = "quantity">
+                                    <button
+                                        onClick={() => decrement(item)}
+                                        disabled={item.quantity <= 1}
+                                        className={item.quantity <= 1 ? 'disabled' : ''}
+                                    >-</button>
+
+                                    <p>{item.quantity}</p>
+
+                                    <button
+                                        onClick={() => increment(item)}
+                                        disabled={item.quantity >= 20}
+                                        className={item.quantity >= 20 ? 'disabled' : ''}
+                                    >+</button>
+
+                                </div>
+
+                                <button className = "removeFromCart" onClick = {() => removeFromCart(item.id)}>Remove</button>
+
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                { cartCount != 0 && (
+                    <>
+                <hr></hr> 
+                <p>Subtotal: ${(totalPrice).toFixed(2)}</p>
+                <p>Tax: ${(currentTax).toFixed(2)}</p>
+                <p>Total: ${(totalPrice + currentTax).toFixed(2)}</p>
+                    </>
+                )}
     
             </div>
 
-        </div>
+
 
 
     );

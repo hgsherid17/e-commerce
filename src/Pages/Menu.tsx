@@ -21,11 +21,14 @@ const Menu: React.FC<MenuProperties> = ({addToCart})  => {
                     ))
                 } 
                 <div className = "category">
-                    <h2>View all</h2>
+                    <img src="/images/burger.jpg" />
+                    <div className ="menuAllCategory">
+                        <h2>View all</h2>
 
-                    <p>{allItems.length} Items</p>
+                        <p>{allItems.length} Items</p>
 
-                    <p><Link to={`/menu/all`}>View Items</Link></p>
+                        <p><Link to={`/menu/all`}>View Items</Link></p>
+                    </div>
 
                 </div>
 
