@@ -1,6 +1,7 @@
 // POPUP SRC: GeeksForGeeks
 import React, { SetStateAction } from 'react';
 import { CartItemType } from '../types';
+import { Link } from 'react-router-dom';
 
 interface CartProperties {
     cart: CartItemType[];
@@ -89,6 +90,8 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, curre
                 <p>Total: ${(totalPrice + currentTax).toFixed(2)}</p>
                     </>
                 )}
+
+                <Link to="/checkout">Checkout</Link>
     
             </div>
 
