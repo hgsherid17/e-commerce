@@ -25,6 +25,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, curre
         }
 
     }
+    
     const decrement = (item: CartItemType) => {
         if (item.quantity > 0) {
             updateItemQuantity(item.id, item.quantity -1);
@@ -32,7 +33,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, curre
             setCartCount(cartCount - 1);
         }
     }
-    // TODO: Calculate tax at checkout
+
     return (
         <div className = "cart">
 

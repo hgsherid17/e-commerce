@@ -37,26 +37,51 @@ const App: React.FC = ()  => {
    * Adds a given food item by id to an array representing a cart
    * @param id 
    */
+  /** TODO: LESS UGLY!!!! LESS GROSS!!!!!!!!!!!
+   * THIS IS UGLY AND GROSS!!!!!!!!
+   * Instead:
+   * Check item in cart
+   * Use update function to check and update quantity
+   * Return bool from that
+   * and if true update count and price
+   * 
+   */
   const addToCart = (id: number) => {
     const addedItem = allItems.find(item => item.id === id);
     // If item exists
     if (addedItem) {
-        // If item is already in cart, increment count
+
+        // Find item in cart array
         const itemIndex = cart.findIndex(item => item.id === id);
+
+        // Item is in cart
         if (itemIndex >= 0) {
-          cart[itemIndex].quantity += 1;
-          console.log("New quantity of cart item " + cart[itemIndex].name + ": " + cart[itemIndex].quantity);
+          // Item cannot have quantity above 20
+          if (cart[itemIndex].quantity < 20) {
+            // Update item quantity
+            cart[itemIndex].quantity += 1;
+            console.log("New quantity of cart item " + cart[itemIndex].name + ": " + cart[itemIndex].quantity);
+
+            // Update count and price
+            setCartCount(prevCount => prevCount + 1);
+            setTotalPrice(prevTotal => prevTotal + addedItem.price);
+          }
+          else {
+            console.log("Too many " + cart[itemIndex].name + " in cart. Could not update quantity or price.")
+          }
         }
-        // Otherwise, convert to cart item type add to cart with count of one
+        // Item is not in cart
         else {
+          // Create a new cart item and add to cart
           const cartItem = toCartItemType(addedItem);
           setCart(prevCart => [...prevCart, cartItem]);
-
           console.log("Added item " + cartItem.name + " to cart. Quantity: " + cartItem.quantity);
-        } 
 
-        setTotalPrice(prevTotal => prevTotal + addedItem.price);
-        setCartCount(prevCount => prevCount + 1);
+          // Update count and price
+          setCartCount(prevCount => prevCount + 1)
+          setTotalPrice(prevTotal => prevTotal + addedItem.price);
+        } 
+        
     }
     else {
       console.error("Could not find item " + id);
@@ -82,10 +107,12 @@ const App: React.FC = ()  => {
   }
 
   const updateItemQuantity = (id: number, quantity: number) => {
-    setCart(prevCart => 
-      prevCart.map(item => 
-        item.id === id ? { ...item, quantity: quantity } : item
-    ));
+    if (quantity < 20) {
+      setCart(prevCart => 
+        prevCart.map(item => 
+          item.id === id ? { ...item, quantity: quantity } : item
+      ));
+    }
   }
 
   /**
