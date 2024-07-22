@@ -395,7 +395,7 @@ input {
 
 .quantity button:hover {
   background-color: transparent;
-  
+
 }
 
 
@@ -423,7 +423,13 @@ input {
   z-index: 10; /* So it appears above other content */
 }
 
-
+/** CHECKOUT **/
+h2 {
+  text-transform: uppercase;
+}
+h2 span {
+  color: var(--main-color);
+}
 /** BUTTONS **/
 button {
   border-radius: 8px;

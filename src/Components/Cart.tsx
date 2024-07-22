@@ -88,10 +88,11 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, curre
                 <p>Subtotal: ${(totalPrice).toFixed(2)}</p>
                 <p>Tax: ${(currentTax).toFixed(2)}</p>
                 <p>Total: ${(totalPrice + currentTax).toFixed(2)}</p>
+
+                <button><Link to="/checkout">Checkout</Link></button>
                     </>
                 )}
-
-                <Link to="/checkout">Checkout</Link>
+                
     
             </div>
 
