@@ -1,5 +1,12 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { CartItemType } from '../types';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import CheckoutForm from '../Components/CheckoutForm';
+
+// SRC: https://www.dhiwise.com/post/the-ultimate-tutorial-for-integration-of-react-stripe-checkout
+
+const stripe = loadStripe('pk_test_51PfQVNJyX9kTwHpnF6XHj3YwT3TTJnjSnJgGGxBAiMN7sBZStlX0DjR1IG7XYHVrBUK92mTsVHnvcmowu8zsCA2300QaNWapvJ');
 
 interface CheckoutProperties {
     cart: CartItemType[];
@@ -15,6 +22,9 @@ const Checkout: React.FC<CheckoutProperties> = ( {cart, currentTax, totalPrice} 
         paymentMethod: ""
     });
 
+    const stripe = useStripe();
+    const elements = useElements();
+
     const change = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -23,45 +33,23 @@ const Checkout: React.FC<CheckoutProperties> = ( {cart, currentTax, totalPrice} 
         });
     };
     const submit = (e: FormEvent) => {
-        return "Yass";
-      };
+        e.preventDefault();
+
+        // No form submission unless stripe is enabled
+        if (!stripe || !elements) {
+            return;
+        }
+
+    };
     
     return (
+        <Elements stripe={stripe}>
         <div>
             <h1>Checkout</h1>
-            <form onSubmit={submit}>
-
-            <h2><span>1</span> Deliver To</h2>
-            <div>
-                <label>
-                    Address:
-                    <textarea name="address" value={formData.address} onChange={change} required />
-                </label>
-            </div>
-
-            <h2><span>2</span> Customer Info</h2>
-            <div>
-                <label>
-                    Name:
-                    <input type="text" name="name" value={formData.name} onChange={change} required />
-                </label>
-            </div>
-
-            <h2><span>3</span> Payment Method</h2>
-            <div>
-                <label>
-                    Payment Method:
-                    <select name="paymentMethod" value={formData.paymentMethod} onChange={change} required>
-                        <option value="creditCard">Credit Card</option>
-                        <option value="debitCard">Debit Card</option>
-                        <option value="paypal">PayPal</option>
-                    </select>
-                </label>
-            </div>
 
             <h2><span>4</span> Review Order</h2>
             {cart.map((item) => (
-                <div className = "checkoutItem">
+                <div key={item.id} className = "checkoutItem">
                     <img src={item.image}></img>
                     <p>{item.quantity}x {item.name}</p>
                     <p>{item.price}</p>
@@ -72,9 +60,11 @@ const Checkout: React.FC<CheckoutProperties> = ( {cart, currentTax, totalPrice} 
             <p>Tax: {(currentTax).toFixed(2)}</p>
             <p>Total: {(totalPrice + currentTax).toFixed(2)}</p>
 
-            <button type="submit">Pay Now</button>
-            </form>
+
+            <CheckoutForm totalAmount = {totalPrice + currentTax} />
+
         </div>
+        </Elements>
     )
 }
 
