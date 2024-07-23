@@ -51,7 +51,9 @@ const CheckoutForm : React.FC<CheckoutFormProperties> = ({ totalAmount }) => {
 
                 if (paymentIntent.status === 'succeeded') {
                     console.log('Payment successful');
+                    window.location.href = '/confirmation';
                 }
+
         } catch (error) {
                 console.error("Error confirming card payment: " + error);
             }

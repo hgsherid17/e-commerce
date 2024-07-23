@@ -9,7 +9,8 @@ import MenuAll from './Pages/MenuAll.tsx';
 import Home from './Pages/Home.tsx';
 import NavBar from './Components/NavBar.tsx';
 import Checkout from './Pages/Checkout.tsx';
-import CheckoutForm from './Components/CheckoutForm.tsx';
+import Confirmation from './Pages/Confirmation.tsx';
+
 
 // TODO: Make less ugly bruv
 // TODO: Pass in category object to FoodCategory component rather than all its info
@@ -141,6 +142,7 @@ const App: React.FC = ()  => {
         <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
         <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice}/>} />
+        <Route path="/confirmation" element={<Confirmation />} />
       </Routes>
 
       { isCartOpen && (
