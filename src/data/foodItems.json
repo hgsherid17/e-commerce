@@ -6,64 +6,150 @@
         "id": 1,
         "image": "/images/burger.jpg",
         "name": "Burger",
-        "price": 9.99,
-        "calories": 777
+        "price": 5.99,
+        "calories": 555
+    },
+    {
+        "id": 2,
+        "image": "/images/deluxe_burger.jpg",
+        "name": "Deluxe Burger",
+        "price": 6.99,
+        "calories": 600
+    },
+    {
+        "id": 3,
+        "image": "/images/bacon_cheeseburger.png",
+        "name": "Bacon Cheeseburger",
+        "price": 6.99,
+        "calories": 720
+    },
+    {
+        "id": 4,
+        "image": "/images/double_bacon_cheeseburger.png",
+        "name": "Double Bacon Cheeseburger",
+        "price": 7.99,
+        "calories": 925
+    },
+    {
+        "id": 5,
+        "image": "/images/cranberry_turkey_burger.png",
+        "name": "Cranberry Turkey Burger",
+        "price": 6.99,
+        "calories": 650
+    },
+    {
+        "id": 6,
+        "image": "/images/greekstyle_turkey_burger.png",
+        "name": "Greek Style Turkey Burger",
+        "price": 6.99,
+        "calories": 700
     }
+
 ]
 },
 "Sandwiches": {
-    "image": "/images/sandwich.jpg",
+    "image": "/images/ham_sandwich.png",
     "items": [
     {
-        "id": 2,
-        "image": "/images/sandwich.jpg",
-        "name": "Sandwich",
-        "price": 7.99,
+        "id": 7,
+        "image": "/images/ham_sandwich.png",
+        "name": "Ham Sandwich",
+        "price": 6.99,
         "calories": 500
+    },
+    {
+        "id": 8,
+        "image": "/images/turkey_sandwich.png",
+        "name": "Turkey Sandwich",
+        "price": 6.99,
+        "calories": 510
+    },
+    {
+        "id": 9,
+        "image": "/images/meatball_sandwich.png",
+        "name": "Meatball Sandwich",
+        "price": 8.99,
+        "calories": 550
     }
 ]},
 "Salads": {
     "image":"/images/salad.jpg",
     "items": [
     {
-        "id": 3,
+        "id": 10,
         "image": "/images/salad.jpg",
         "name": "Salad",
         "price": 8.99,
-        "calories": 777
+        "calories": 250
     }
 ]}, 
 "Sides": {
-    "image": "/images/fries.jpg",
+    "image": "/images/fries.png",
     "items": [
     {
-        "id": 4,
-        "image": "/images/fries.jpg",
+        "id": 11,
+        "image": "/images/fries.png",
         "name": "Fries",
+        "price": 2.99,
+        "calories": 300
+    },
+    {
+        "id": 12,
+        "image": "/images/curly_fries.jpg",
+        "name": "Curly Fries",
+        "price": 2.99,
+        "calories": 350
+    },
+    {
+        "id": 13,
+        "image": "/images/onion_rings.png",
+        "name": "Onion Rings",
         "price": 3.99,
-        "calories": 327
+        "calories": 420
     }
 ]}, 
 "Drinks": {
     "image": "/images/soda.jpg",
     "items": [
     {
-        "id": 6,
-        "image": "/images/soda.jpg",
-        "name": "Soda",
+        "id": 14,
+        "image": "/images/coke.jpg",
+        "name": "Coca-Cola",
         "price": 2.99,
-        "calories": 105
+        "calories": 140
+    },
+    {
+        "id": 15,
+        "image": "/images/diet_coke.jpg",
+        "name": "Diet Coke",
+        "price": 2.99,
+        "calories": 0
+    },
+    {
+        "id": 16,
+        "image": "/images/drpepper.jpg",
+        "name": "Dr. Pepper",
+        "price": 2.99,
+        "calories": 150
+    },
+    {
+        "id": 17,
+        "image": "/images/sprite.jpg",
+        "name": "Sprite",
+        "price": 2.99,
+        "calories": 140
     }
+
 ]},
 "Wings": {
     "image": "/images/wings.jpg",
     "items": [
     {
-        "id": 7,
+        "id": 18,
         "image": "/images/wings.jpg",
         "name": "Wings",
         "price": 5.99,
-        "calories": 555
+        "calories": 600
     }
 ]}
 }

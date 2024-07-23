@@ -6,7 +6,7 @@ import FoodCategory from '../Components/FoodCategory.tsx';
 import { Link } from 'react-router-dom';
 
 const Menu: React.FC<MenuProperties> = ({addToCart})  => {
-    const allItems = Object.values(foodItems).flat();
+    const allItems = Object.values(foodItems).flatMap(category => category.items);
 
     const categories = foodItems as FoodItemCategories;
     return (
@@ -21,7 +21,7 @@ const Menu: React.FC<MenuProperties> = ({addToCart})  => {
                     ))
                 } 
                 <div className = "category">
-                    <img src="/images/burger.jpg" />
+                    <img src="/images/two_burgers.jpg" />
                     <div className ="menuAllCategory">
                         <h2>View all</h2>
 

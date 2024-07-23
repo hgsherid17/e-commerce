@@ -25,7 +25,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, curre
         }
 
     }
-    
+
     const decrement = (item: CartItemType) => {
         if (item.quantity > 0) {
             updateItemQuantity(item.id, item.quantity -1);
