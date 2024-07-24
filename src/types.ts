@@ -38,6 +38,13 @@ export interface MenuProperties {
     addToCart: (id: number) => void;
 }
 
+export interface CheckoutProperties {
+    cart: CartItemType[];
+    currentTax: number;
+    totalPrice: number;
+    setPaymentInfo: (paymentInfo: any) => void;
+}
+
 
 export type SearchTermType = string;
 

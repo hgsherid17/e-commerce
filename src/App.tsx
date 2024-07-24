@@ -28,6 +28,7 @@ const App: React.FC = ()  => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [currentTax, setCurrentTax] = useState<number>(0);
   const [cartCount, setCartCount] = useState<number>(0);
+  const [paymentInfo, setPaymentInfo] = useState<any>(null);
 
   const tax = 0.04;
 
@@ -141,8 +142,8 @@ const App: React.FC = ()  => {
         <Route path="/menu" element={<Menu addToCart = {addToCart} />} />
         <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
-        <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice}/>} />
-        <Route path="/confirmation" element={<Confirmation />} />
+        <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} />} />
+        <Route path="/confirmation/:orderNumber" element={<Confirmation paymentInfo = {paymentInfo} />} />
       </Routes>
 
       { isCartOpen && (

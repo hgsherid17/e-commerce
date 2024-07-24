@@ -2,6 +2,7 @@ const express = require('express');
 const stripe = require('stripe')('sk_test_51PfQVNJyX9kTwHpnjUMHCu9PTJQKOonafBQrPaj6jwSSgyHzKdCmlxNUHpkNMPfxw4v5aiihmN4wKtgvX5sZlSbE00m8ByMV3u');
 const cors = require('cors');
 const port = 3301;
+const {v4: generateRand } = require('uuid');
 
 const app = express();
 // Super sensitive information!!! Dont steal hackerz!!!1!
@@ -14,6 +15,7 @@ app.post('/create-payment-intent', async (req, res) => {
     const { amount } = req.body;
     // Ensure rounded in cents
     const amountInCents = Math.round(amount * 100)
+    const orderNumber = generateRand();
 
     try {
         const paymentIntent = await stripe.paymentIntents.create({

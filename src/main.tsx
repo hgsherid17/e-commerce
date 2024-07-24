@@ -6,6 +6,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
+// SRC: Contexts - https://legacy.reactjs.org/docs/context.html
+
 const myPublicKey = loadStripe('pk_test_51PfQVNJyX9kTwHpnF6XHj3YwT3TTJnjSnJgGGxBAiMN7sBZStlX0DjR1IG7XYHVrBUK92mTsVHnvcmowu8zsCA2300QaNWapvJ')
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
