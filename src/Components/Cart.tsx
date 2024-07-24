@@ -6,31 +6,26 @@ import { Link } from 'react-router-dom';
 interface CartProperties {
     cart: CartItemType[];
     totalPrice: number;
-    setTotalPrice: React.Dispatch<SetStateAction<number>>;
     currentTax: number;
     cartCount: number;
-    setCartCount: React.Dispatch<SetStateAction<number>>;
     toggle: () => void;
-    removeFromCart: (id: number) => void;
-    updateItemQuantity: (id: number, quantity: number) => void;
+    removeFromCart: (id: number, quantity: number) => void;
+    addToCart: (id: number) => void;
 }
-const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, currentTax, cartCount, setCartCount, toggle, removeFromCart, updateItemQuantity}) => {
+
+const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCount, toggle, removeFromCart, addToCart}) => {
 
     // TODO: Is there a way to do this in App? Or move variables like this to this component?
     const increment = (item: CartItemType) => {
         if (item.quantity < 20) {
-            updateItemQuantity(item.id, item.quantity + 1);
-            setTotalPrice(totalPrice + item.price);
-            setCartCount(cartCount + 1);
+            addToCart(item.id);
         }
 
     }
 
     const decrement = (item: CartItemType) => {
         if (item.quantity > 0) {
-            updateItemQuantity(item.id, item.quantity -1);
-            setTotalPrice(totalPrice - item.price);
-            setCartCount(cartCount - 1);
+            removeFromCart(item.id, item.quantity - 1);
         }
     }
 
@@ -39,7 +34,20 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, curre
 
             <button className = "toggleCart" onClick={() => toggle()}>X</button>
 
-           
+            {cartCount === 0 && (
+                <>
+                <div className = "cartSummary">
+                <h2>My Cart</h2>
+                </div>
+                <hr></hr>
+                <div className ="nothingInCart">
+                    <h2>There's nothing in your cart.</h2>
+                    <p>Start adding items to satisfy your hunger!</p>
+                </div>
+                </>
+            )}
+            { cartCount != 0 && (
+                <>
                 <div className = "cartSummary">
                     <h2>My Cart</h2>
                     <p className = "numItems">{ cartCount } {cartCount == 1 ? "Item" : "Items"}</p>
@@ -77,14 +85,14 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, setTotalPrice, curre
 
                                 </div>
 
-                                <button className = "removeFromCart" onClick = {() => removeFromCart(item.id)}>Remove</button>
+                                <button className = "removeFromCart" onClick = {() => removeFromCart(item.id, item.quantity)}>Remove</button>
 
                             </div>
                         </div>
                         ))}
                     </div>
-                { cartCount != 0 && (
-                    <>
+                
+                    
                 <hr></hr> 
                 <p>Subtotal: ${(totalPrice).toFixed(2)}</p>
                 <p>Tax: ${(currentTax).toFixed(2)}</p>

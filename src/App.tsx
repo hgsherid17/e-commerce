@@ -95,8 +95,39 @@ const App: React.FC = ()  => {
    * Removes a given food item by id from an array representing a cart
    * @param id 
    */
-  const removeFromCart = (id: number) => {
+  const removeFromCart = (id: number, quantity: number) => {
+
     const itemToRemove = cart.find(item => item.id === id);
+
+    if (itemToRemove) {
+      // If removing entire item
+      if (quantity === itemToRemove.quantity) {
+        const updatedCart = cart.filter(item => item.id !== id);
+        setCart(updatedCart);
+        setTotalPrice(prevTotal => prevTotal - (itemToRemove.price * quantity));
+        setCartCount(cartCount - quantity);
+        console.log("Removed item: " + itemToRemove.name + " from cart.")
+      }
+      // If updating quantity in cart
+      else {
+        if (quantity === itemToRemove.quantity - 1) {
+          setCart(prevCart => 
+            prevCart.map(item => 
+              item.id === id ? { ...item, quantity: quantity } : item
+          ));
+          setTotalPrice(prevTotal => prevTotal - itemToRemove.price);
+          setCartCount(cartCount - 1);
+          console.log("New quantity of cart item " + itemToRemove.name + ": " + quantity)
+        }
+        else {
+          console.error("Cannot update quantity of item: " + itemToRemove.name);
+        }
+      }
+    }
+    else {
+      console.error("Item with id: " + id + "is not in cart");
+    }
+    /**
     if (itemToRemove) {
       const updatedCart = cart.filter(item => item.id !== id);
       setCart(updatedCart);
@@ -106,16 +137,7 @@ const App: React.FC = ()  => {
     }
     else {
       console.error("Item with id: " + id + "is not in the cart");
-    }
-  }
-
-  const updateItemQuantity = (id: number, quantity: number) => {
-    if (quantity < 20) {
-      setCart(prevCart => 
-        prevCart.map(item => 
-          item.id === id ? { ...item, quantity: quantity } : item
-      ));
-    }
+    }*/
   }
 
   /**
@@ -153,13 +175,11 @@ const App: React.FC = ()  => {
         <Cart 
           cart = {cart}
           totalPrice = {totalPrice}
-          setTotalPrice = {setTotalPrice}
           currentTax = {currentTax}
           cartCount = {cartCount}
-          setCartCount = {setCartCount}
           toggle = {toggleCart}
           removeFromCart={removeFromCart}
-          updateItemQuantity={updateItemQuantity}
+          addToCart={addToCart}
         />
         </div>
         )}
