@@ -127,17 +127,6 @@ const App: React.FC = ()  => {
     else {
       console.error("Item with id: " + id + "is not in cart");
     }
-    /**
-    if (itemToRemove) {
-      const updatedCart = cart.filter(item => item.id !== id);
-      setCart(updatedCart);
-      setTotalPrice(prevTotal => prevTotal - (itemToRemove.price * itemToRemove.quantity));
-      setCartCount(cartCount - itemToRemove.quantity);
-      console.log("Removed item: " + itemToRemove.id + " from cart")
-    }
-    else {
-      console.error("Item with id: " + id + "is not in the cart");
-    }*/
   }
 
   /**
@@ -161,7 +150,7 @@ const App: React.FC = ()  => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/menu" element={<Menu addToCart = {addToCart} />} />
+        <Route path="/menu" element={<Menu />} />
         <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
         <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} />} />
@@ -184,7 +173,7 @@ const App: React.FC = ()  => {
         </div>
         )}
       
-      <footer>Copyright Hannarby's Enterprises 2024 lol</footer>
+      <footer>Copyright Hannarby's Enterprises 2024</footer>
 
     </div>
   );

@@ -15,9 +15,9 @@ const FoodCategory: React.FC<FoodCategoryProperties> = ({category, numItems, ima
             <div className="content">
                 <h2>{category}</h2>
 
-                <p>{numItems} Items</p>
+                <p className= "numItems" >{numItems} Items</p>
 
-                <p><Link to={`/menu/${category}`}>View Items</Link></p>
+                <p><Link className = "menuLink" to={`/menu/${category}`}>View Items</Link></p>
             </div>
 
         </div>

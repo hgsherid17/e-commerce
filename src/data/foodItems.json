@@ -1,5 +1,6 @@
 {
     "Burgers": {
+        "id": 100,
         "image": "/images/burger.jpg",
         "items": [
     {
@@ -48,6 +49,7 @@
 ]
 },
 "Sandwiches": {
+    "id": 200,
     "image": "/images/ham_sandwich.png",
     "items": [
     {
@@ -73,6 +75,7 @@
     }
 ]},
 "Salads": {
+    "id": 300,
     "image":"/images/salad.jpg",
     "items": [
     {
@@ -84,6 +87,7 @@
     }
 ]}, 
 "Sides": {
+    "id": 400,
     "image": "/images/fries.png",
     "items": [
     {
@@ -109,6 +113,7 @@
     }
 ]}, 
 "Drinks": {
+    "id": 500,
     "image": "/images/soda.jpg",
     "items": [
     {
@@ -142,6 +147,7 @@
 
 ]},
 "Wings": {
+    "id": 500,
     "image": "/images/wings.jpg",
     "items": [
     {

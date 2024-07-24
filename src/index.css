@@ -69,7 +69,7 @@ input {
   display: flex;
   align-items: center;
 
-  width: 310px;
+  width: 350px;
   height: 150px;
   margin: 1.5rem;
   padding: 2em;
@@ -89,6 +89,7 @@ input {
 .category h2 {
   text-transform: uppercase;
   font-family: var(--main-font); 
+  margin-bottom: 0;
 }
 .category img {
   width: 100px;
@@ -218,6 +219,24 @@ input {
   box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
   color: black;
 }
+.goToMenu:hover {
+  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05, 1.05);
+}
+
+.menuLink {
+  text-transform: uppercase;
+  color: black;
+  text-decoration: underline;
+}
+.menuLink:hover {
+  text-decoration: none;
+  color: black;
+}
+.numItems {
+  margin: 0;
+  color: darkgray;
+}
 
 /** NAV BAR **/
 .navBar {
@@ -326,6 +345,25 @@ input {
 }
 .cartSummary .total p {
   margin: 0;
+}
+.nothingInCart {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sadBurger {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background-color: var(--main-color);
+
+}
+.sadBurger img {
+  width: 100px;
+  height: 100px;
 }
 
 .cartItems {

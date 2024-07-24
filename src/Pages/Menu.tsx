@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { FoodItemType, SearchTermType, FoodItemCategories, MenuProperties } from '../types';
-import FoodItem from '../Components/FoodItem.tsx';
+import {FoodItemCategories, MenuProperties } from '../types';
 import foodItems from '../data/foodItems.json';
 import FoodCategory from '../Components/FoodCategory.tsx';
 import { Link } from 'react-router-dom';
 
-const Menu: React.FC<MenuProperties> = ({addToCart})  => {
+const Menu: React.FC = ()  => {
     const allItems = Object.values(foodItems).flatMap(category => category.items);
 
     const categories = foodItems as FoodItemCategories;
@@ -25,9 +24,9 @@ const Menu: React.FC<MenuProperties> = ({addToCart})  => {
                     <div className ="menuAllCategory">
                         <h2>View all</h2>
 
-                        <p>{allItems.length} Items</p>
+                        <p className = "numItems">{allItems.length} Items</p>
 
-                        <p><Link to={`/menu/all`}>View Items</Link></p>
+                        <p><Link className = "menuLink" to={`/menu/all`}>View Items</Link></p>
                     </div>
 
                 </div>

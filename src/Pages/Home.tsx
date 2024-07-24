@@ -3,6 +3,7 @@ import promos from '../data/promotions.json';
 import Promotion from '../Components/Promotion.tsx';
 import { PromoType } from '../types.ts';
 import { Link } from 'react-router-dom';
+import Menu from '../Pages/Menu.tsx';
 
 interface HomeProperties {
 
@@ -31,12 +32,7 @@ const Home: React.FC<HomeProperties> = ()  => {
             </div>
 
             <div className = "menuHome">
-                <h1>Menu</h1>
-                <div className ="container">
-                <div className="goToMenu">
-                    <Link to ="/menu">Go to Menu</Link>
-                </div>
-                </div>
+                < Menu />
 
             </div>
         </div>

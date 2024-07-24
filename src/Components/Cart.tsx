@@ -41,6 +41,9 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCoun
                 </div>
                 <hr></hr>
                 <div className ="nothingInCart">
+                    <div className="sadBurger">
+                        <img src="/images/sad_burger.png" />
+                    </div>
                     <h2>There's nothing in your cart.</h2>
                     <p>Start adding items to satisfy your hunger!</p>
                 </div>
