@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {BrowserRouter as Routes, Route } from 'react-router-dom';
 import Cart from './Components/Cart.tsx';
 import { CartItemType, FoodItemType} from './types.ts';
 import foodItems from './data/foodItems.json'; // Static data does not need useState
@@ -154,7 +154,7 @@ const App: React.FC = ()  => {
         <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
         <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} />} />
-        <Route path="/confirmation/:orderNumber" element={<Confirmation paymentInfo = {paymentInfo} />} />
+        <Route path="http://localhost:5173/confirmation" element={<Confirmation paymentInfo = {paymentInfo} />} />
       </Routes>
 
       { isCartOpen && (

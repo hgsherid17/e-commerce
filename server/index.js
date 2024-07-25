@@ -14,13 +14,15 @@ app.use(express.json());
 app.post('/create-payment-intent', async (req, res) => {
     const { amount } = req.body;
     // Ensure rounded in cents
-    const amountInCents = Math.round(amount * 100)
-    const orderNumber = generateRand();
+    const amountInCents = Math.round(amount * 100);
+    // const orderNumber = generateRand();
+    console.log("received amount " + amountInCents);
 
     try {
+        console.log("HI! Creating Intent in SERVER");
         const paymentIntent = await stripe.paymentIntents.create({
             amount: amountInCents,
-            currency: 'usd',
+            currency: 'usd'
         });
         res.json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {

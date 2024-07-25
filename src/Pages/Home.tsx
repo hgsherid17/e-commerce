@@ -2,7 +2,6 @@ import React from 'react';
 import promos from '../data/promotions.json';
 import Promotion from '../Components/Promotion.tsx';
 import { PromoType } from '../types.ts';
-import { Link } from 'react-router-dom';
 import Menu from '../Pages/Menu.tsx';
 
 interface HomeProperties {

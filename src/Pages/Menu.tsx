@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {FoodItemCategories, MenuProperties } from '../types';
+import React from 'react';
+import {FoodItemCategories } from '../types';
 import foodItems from '../data/foodItems.json';
 import FoodCategory from '../Components/FoodCategory.tsx';
 import { Link } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import foodItems from '../data/foodItems.json'
-import { CategoryType, FoodItemCategories, FoodItemType, MenuProperties } from '../types';
+import { FoodItemCategories, FoodItemType, MenuProperties } from '../types';
 import FoodItem from '../Components/FoodItem.tsx'
 
 const MenuCategory : React.FC<MenuProperties> = ({addToCart}) => {
@@ -9,7 +9,7 @@ const MenuCategory : React.FC<MenuProperties> = ({addToCart}) => {
     const categories = foodItems as FoodItemCategories;
     const data = categories[category as keyof FoodItemCategories] || [];
 
-    const { image, items } = data;
+    const { items } = data;
 
     return (
         <div className = "menuCategory">

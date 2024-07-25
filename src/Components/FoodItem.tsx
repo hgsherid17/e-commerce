@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { FoodItemType } from '../types';
 
 // Give FoodItem component properties from FoodItemType

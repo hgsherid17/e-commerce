@@ -1,5 +1,4 @@
 // POPUP SRC: GeeksForGeeks
-import React, { SetStateAction } from 'react';
 import { CartItemType } from '../types';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +13,6 @@ interface CartProperties {
 }
 
 const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCount, toggle, removeFromCart, addToCart}) => {
-
     // TODO: Is there a way to do this in App? Or move variables like this to this component?
     const increment = (item: CartItemType) => {
         if (item.quantity < 20) {

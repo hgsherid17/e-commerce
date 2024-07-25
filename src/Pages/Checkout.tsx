@@ -1,6 +1,5 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { CartItemType } from '../types';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import React, { useState, useEffect } from 'react';
+import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../Components/CheckoutForm';
 import { CheckoutProperties } from '../types';
@@ -10,13 +9,49 @@ import { CheckoutProperties } from '../types';
 const stripe = loadStripe('pk_test_51PfQVNJyX9kTwHpnF6XHj3YwT3TTJnjSnJgGGxBAiMN7sBZStlX0DjR1IG7XYHVrBUK92mTsVHnvcmowu8zsCA2300QaNWapvJ');
 
 const Checkout: React.FC<CheckoutProperties> = ( {cart, currentTax, totalPrice, setPaymentInfo} ) => {
-    
+    const [clientSecret, setClientSecret] = useState<string | null>(null);
+    const fetchClientSecret = async () => 
+        {
+            try {
+                if (!clientSecret) {
+                    console.log("HI! Creating Intent in CHECKOUT");
+                    const response = await fetch('http://localhost:3301/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ amount: totalPrice + currentTax }),
+                    });
+
+                    if (response.ok) {
+                        const { clientSecret } = await response.json();
+                        setClientSecret(clientSecret);
+                    }
+                    else {
+                        console.error("Failed to fetch client secret")
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching client secret: " + error)
+            }
+        }
+
+    useEffect(() => {
+        fetchClientSecret();
+    }, [totalPrice, currentTax]);
+
     return (
-        <Elements stripe={stripe}>
         <div>
-            <CheckoutForm cart = {cart} currentTax= {currentTax} totalPrice={totalPrice} setPaymentInfo={setPaymentInfo} />
+        {clientSecret &&
+            (<Elements stripe={stripe} options={{clientSecret: clientSecret}}>
+            <CheckoutForm 
+                cart = {cart} 
+                currentTax= {currentTax} 
+                totalPrice={totalPrice} 
+                setPaymentInfo={setPaymentInfo} 
+            />
+        </Elements>)}
         </div>
-        </Elements>
     )
 }
 

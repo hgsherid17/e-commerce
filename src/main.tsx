@@ -8,13 +8,13 @@ import { loadStripe } from '@stripe/stripe-js';
 
 // SRC: Contexts - https://legacy.reactjs.org/docs/context.html
 
-const myPublicKey = loadStripe('pk_test_51PfQVNJyX9kTwHpnF6XHj3YwT3TTJnjSnJgGGxBAiMN7sBZStlX0DjR1IG7XYHVrBUK92mTsVHnvcmowu8zsCA2300QaNWapvJ')
+const stripe = loadStripe('pk_test_51PfQVNJyX9kTwHpnF6XHj3YwT3TTJnjSnJgGGxBAiMN7sBZStlX0DjR1IG7XYHVrBUK92mTsVHnvcmowu8zsCA2300QaNWapvJ');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
     <BrowserRouter>
-      <Elements stripe={myPublicKey}>
+      <Elements stripe={stripe}>
         <App />
       </Elements>
     </BrowserRouter>
