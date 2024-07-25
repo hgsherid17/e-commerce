@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {BrowserRouter as Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Cart from './Components/Cart.tsx';
 import { CartItemType, FoodItemType} from './types.ts';
 import foodItems from './data/foodItems.json'; // Static data does not need useState
