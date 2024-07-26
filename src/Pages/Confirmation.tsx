@@ -1,10 +1,10 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 import { CartItemType } from '../types';
 
 
 const Confirmation : React.FC<{paymentInfo: any}> = ({paymentInfo}) => {
-    const { orderNumber } = useParams<{ orderNumber: string }>();
+    //const { orderNumber } = useParams<{ orderNumber: string }>();
 
     if (!paymentInfo) {
         return <h1>Payment Successful!</h1>;
