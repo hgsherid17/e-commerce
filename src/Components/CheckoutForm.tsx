@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import { CheckoutProperties } from '../types';
@@ -8,52 +8,12 @@ import { CheckoutProperties } from '../types';
     error: StripeError | null
     paymentIntent: PaymentIntent | null
 }
-// SRC: Style element - https://docs.stripe.com/elements/appearance-api
-const appearance = {
-    theme: 'flat',
-    variables: {
-      fontFamily: ' "Gill Sans", sans-serif',
-      fontLineHeight: '1.5',
-      borderRadius: '10px',
-      colorBackground: '#F6F8FA',
-      accessibleColorOnColorPrimary: '#262626'
-    },
-    rules: {
-      '.Block': {
-        backgroundColor: 'var(--colorBackground)',
-        boxShadow: 'none',
-        padding: '12px'
-      },
-      '.Input': {
-        padding: '12px'
-      },
-      '.Input:disabled, .Input--invalid:disabled': {
-        color: 'lightgray'
-      },
-      '.Tab': {
-        padding: '10px 12px 8px 12px',
-        border: 'none'
-      },
-      '.Tab:hover': {
-        border: 'none',
-        boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
-      },
-      '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
-        border: 'none',
-        backgroundColor: '#fff',
-        boxShadow: '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
-      },
-      '.Label': {
-        fontWeight: '500'
-      }
-    }
-};*/
+// SRC: Style element - https://docs.stripe.com/elements/appearance-api*/
 
 const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPrice, setPaymentInfo}) => {
     const stripe = useStripe();
     const elements = useElements();
-    setPaymentInfo(null);
-    //const totalAmount = Math.round((currentTax + totalPrice) * 100);
+    //const totalAmount = Math.round((currentTax + totalPrice));
     const totalAmount = currentTax + totalPrice;
     // const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
@@ -61,21 +21,19 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
 
     // const [orderNumber, setOrderNumber] = useState<string | null>(null);
 
-    /*const [formData, setFormData]= useState({
+    const [formData, setFormData]= useState({
         name: "",
-        email: "",
-        address: "",
-        paymentMethod: ""
-    });*/
+        email: ""
+    });
     
 
-    /*const change = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const change = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
           ...formData,
           [name]: value,
         });
-    };*/
+    };
 
     const stripeSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -109,7 +67,7 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
         
         try {
                 console.log("HI! CREATING INTENT");
-                const response = await axios.post('http://localhost:3301/create-payment-intent', {
+                const response = await axios.post(`${import.meta.env.API_BASE}/create-payment-intent`, {
                 amount: totalAmount 
                 });
 
@@ -129,14 +87,13 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
                     return;
                 }
                     console.log('Payment successful');
-                    /*setOrderNumber(orderNumber);
+
                     setPaymentInfo({
-                        orderId: orderNumber,
-                        amount: totalAmount.toFixed(2),
+                        amount: totalAmount,
                         name: formData.name,
                         email: formData.email,
                         summary: cart
-                    })*/
+                    })
 
                     setLoading(false);
                 
@@ -149,17 +106,30 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
     
     return (
 
-        <div>
+        <div className = "checkoutForm">
             <h1>Checkout</h1>
+            <h2><span>1</span> Customer Info</h2>
+            <div className = "cusInfo">
+                <label>
+                    Name:
+                    <input type="text" name="name" value={formData.name} onChange={change} required />
+                </label>
+                <label>
+                    Email:
+                    <input type="text" name="email" value={formData.email} onChange={change} required />
+                </label>
+            </div>
 
-            <h2><span>3</span> Review Order</h2>
+            <div className = "review">
+            <h2><span>2</span> Review Order</h2>
             {cart.map((item) => (
                 <div key={item.id} className = "checkoutItem">
                     <img src={item.image}></img>
-                    <p>{item.quantity}x {item.name}</p>
-                    <p>{item.price}</p>
+                    <p><span className = "itemQuan">{item.quantity}x</span> {item.name}</p>
+                    <p>{item.price * item.quantity}</p>
                 </div>
             ))}
+            </div>
 
             <hr></hr>
             <p>Subtotal: {(totalPrice).toFixed(2)}</p>
@@ -167,10 +137,10 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
             <p>Total: {(totalAmount).toFixed(2)}</p>
 
 
-            <h2><span>4</span> Payment Information</h2>
+            <h2><span>3</span> Payment Information</h2>
 
-            <div>
-                <form onSubmit={stripeSubmit}>
+            <div className="payInfoContainer">
+                <form className = "payInfo" onSubmit={stripeSubmit}>
                         <PaymentElement />
                         <button type="submit" disabled={loading}>{loading ? 'Processing…' : 'Pay Now'}</button>
                 </form>

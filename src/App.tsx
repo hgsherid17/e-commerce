@@ -141,7 +141,8 @@ const App: React.FC = ()  => {
   useEffect(() => {
     setCurrentTax(totalPrice * tax);
     setCart(cart);
-  }, [totalPrice, cart])
+    setPaymentInfo(paymentInfo);
+  }, [totalPrice, cart, paymentInfo])
 
   return (
 
@@ -154,7 +155,7 @@ const App: React.FC = ()  => {
         <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
         <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} />} />
-        <Route path="http://localhost:5173/confirmation" element={<Confirmation paymentInfo = {paymentInfo} />} />
+        <Route path="/confirmation" element={<Confirmation paymentInfo = {paymentInfo} />} />
       </Routes>
 
       { isCartOpen && (
