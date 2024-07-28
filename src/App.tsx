@@ -11,6 +11,7 @@ import NavBar from './Components/NavBar.tsx';
 import Checkout from './Pages/Checkout.tsx';
 import Confirmation from './Pages/Confirmation.tsx';
 import ApplicablePromoItems from './Pages/ApplicablePromoItems.tsx';
+import promos from './data/promotions.json';
 
 
 // TODO: Make less ugly bruv
@@ -30,12 +31,71 @@ const App: React.FC = ()  => {
   const [currentTax, setCurrentTax] = useState<number>(0);
   const [cartCount, setCartCount] = useState<number>(0);
   const [paymentInfo, setPaymentInfo] = useState<any>(null);
+  const [applicableItems, setApplicableItems] = useState<FoodItemType[]>([]);
+  //const [promos, setPromos] = useState<number>(0);
 
   const tax = 0.04;
 
   const toCartItemType = (item: FoodItemType): CartItemType => {
-   return Object.assign(item, {quantity: 1});
+   //return Object.assign(item, {quantity: 1}, {discount: 0});
+    return {
+      ...item,
+      quantity: 1,
+      discount: 0
+    };
   }
+
+  const getCategoryByItemId = (itemId: number): number | undefined => {
+    for (const categoryKey in foodItems) {
+        const category = foodItems[categoryKey as keyof typeof foodItems];
+        if (category.items.some(item => item.id === itemId)) {
+            return category.id;
+        }
+
+    }
+    return undefined;
+};
+
+const applyPromotion = () => {
+    // Loop through promos
+    for (const item of cart) {
+
+        const categoryId = getCategoryByItemId(item.id);
+
+
+        if (categoryId) {
+            for (const promo of promos) {
+                if (promo.applicableItems.includes(categoryId)) {
+                    if (promo.type === "BOGO") {
+                        console.log("Here is item: " + item.name + " and promo: " + promo.type);
+                        if (item.quantity >=2) {
+                          if (item.quantity % 2 === 0) {
+                              item.discount = (item.quantity * item.price) / 2;
+                              console.log("mod " + item.quantity + " " + item.name + " " + item.discount);
+                          }
+                          else {
+                              item.discount = ((item.quantity - 1) * item.price) / 2;
+                              console.log(item.quantity + " " + item.name + " " + item.discount);
+                          }
+                          
+                          
+                      }
+
+
+                    }
+                    if (promo.type === "FREEITEM") {
+                        console.log("Here is item: " + item.name + " and promo: " + promo.type);
+
+                    }
+
+
+                }
+            }
+        }
+        
+
+    }
+}
 
   /**
    * Adds a given food item by id to an array representing a cart
@@ -68,7 +128,9 @@ const App: React.FC = ()  => {
 
             // Update count and price
             setCartCount(prevCount => prevCount + 1);
+            //const discount = cart[itemIndex].discount ?? 0;
             setTotalPrice(prevTotal => prevTotal + addedItem.price);
+            //setTotalPrice(prevTotal => prevTotal - cart[itemIndex].discount);
           }
           else {
             console.log("Too many " + cart[itemIndex].name + " in cart. Could not update quantity or price.")
@@ -83,13 +145,20 @@ const App: React.FC = ()  => {
 
           // Update count and price
           setCartCount(prevCount => prevCount + 1)
+
+          //const discount = cartItem.discount ?? 0;
           setTotalPrice(prevTotal => prevTotal + addedItem.price);
+          //setTotalPrice(prevTotal => prevTotal - cartItem.discount);
         } 
+
+        applyPromotion();
         
     }
+    
     else {
       console.error("Could not find item " + id);
     }
+
   };
 
   /**
@@ -157,7 +226,7 @@ const App: React.FC = ()  => {
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
         <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} />} />
         <Route path="/confirmation" element={<Confirmation paymentInfo = {paymentInfo} />} />
-        <Route path="/applicable-items/:id" element={<ApplicablePromoItems addToCart={addToCart} />} />
+        <Route path="/applicable-items/:id" element={<ApplicablePromoItems addToCart={addToCart} applicableItems={applicableItems} setApplicableItems = {setApplicableItems} />} />
       </Routes>
 
       { isCartOpen && (

@@ -7,10 +7,12 @@ import { useParams } from 'react-router-dom';
 
 interface ApplicablePromoItemsProperties {
     addToCart: (id: number) => void;
+    applicableItems: FoodItemType[];
+    setApplicableItems: React.Dispatch<React.SetStateAction<FoodItemType[]>>;
+    
 }
-const ApplicablePromoItems : React.FC<ApplicablePromoItemsProperties> = ({ addToCart }) => {
+const ApplicablePromoItems : React.FC<ApplicablePromoItemsProperties> = ({ addToCart, applicableItems, setApplicableItems }) => {
     console.log("WE ARE HERE");
-    const [applicableItems, setApplicableItems] = useState<FoodItemType[]>([]);
     const { id } = useParams<{ id: string }>();
 
     const getApplicableItems = (promoId : number) => {
@@ -33,13 +35,13 @@ const ApplicablePromoItems : React.FC<ApplicablePromoItemsProperties> = ({ addTo
         }
 
     }
-
+/*
     useEffect(() => {
         if (id) {
             getApplicableItems(parseInt(id));
         }
 
-    }, [id])
+    }, [id])*/
     
 
     return (

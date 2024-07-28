@@ -4,7 +4,6 @@ import { FoodItemType } from '../types';
 interface FoodItemProperties {
     item: FoodItemType;
     addToCart: (id: number) => void;
-    
 }
 
 /**

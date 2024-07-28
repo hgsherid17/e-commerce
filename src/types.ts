@@ -9,7 +9,7 @@ export interface FoodItemType {
 
 export interface CategoryType {
     image: string;
-    items: FoodItemType[];
+    items: FoodItemType[] | CartItemType[];
 }
 export interface FoodItemCategories {
     [category: string]: CategoryType;
@@ -18,6 +18,7 @@ export interface FoodItemCategories {
 
 export interface CartItemType extends FoodItemType {
     quantity: number;
+    discount: number;
 }
 
 export interface CartType {

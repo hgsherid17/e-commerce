@@ -1,6 +1,9 @@
 // POPUP SRC: GeeksForGeeks
+import React , {useCallback, useEffect} from 'react';
 import { CartItemType } from '../types';
 import { Link } from 'react-router-dom';
+import promos from '../data/promotions.json';
+import foodItems from '../data/foodItems.json';
 
 interface CartProperties {
     cart: CartItemType[];
@@ -27,6 +30,72 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCoun
         }
     }
 
+    const getCategoryByItemId = (itemId: number): number | undefined => {
+        for (const categoryKey in foodItems) {
+            const category = foodItems[categoryKey as keyof typeof foodItems];
+            if (category.items.some(item => item.id === itemId)) {
+                return category.id;
+            }
+
+        }
+        return undefined;
+    };
+
+    const applyPromotion = () => {
+        // Loop through promos
+        for (const item of cart) {
+
+            const categoryId = getCategoryByItemId(item.id);
+
+    
+            if (categoryId) {
+                for (const promo of promos) {
+                    if (promo.applicableItems.includes(categoryId)) {
+                        if (promo.type === "BOGO") {
+                            console.log("Here is item: " + item.name + " and promo: " + promo.type);
+
+                        }
+                        if (promo.type === "FREEITEM") {
+                            console.log("Here is item: " + item.name + " and promo: " + promo.type);
+
+                        }
+
+
+                    }
+                }
+            }
+            
+
+        }
+    }
+        // The complexity is crazy here
+        /*for (let i = 0; i < promos.length; i++) {
+            for (const categoryKey in promos[i].applicableItems) {
+                const items = getCategoryItems(parseInt(categoryKey));
+                for (const item in items) {
+                    
+                }
+            }
+        }*/
+        // Find category.items
+
+        
+        // If promo.type === BOGO
+            // If item.quantity >= 2
+                // If item.quantity % 2 === 0
+                    // BOGOPROMOPRICE = item.totalPrice / 2
+                    // Print promo applied
+                // Else [item.quantity - 1 % 2 === 0]
+                    // BOGOPROMOPRICE = item.price - 1 * item.quantity / 2
+            // Else
+                // Unapplicable, print (would you like to buy one get one free?
+                // Link to applicableitems/:promoId
+    
+        // If promo.type === FREEITEM
+            // 
+    
+        // Apply promotion
+    
     return (
         <div className = "cart">
 
@@ -65,7 +134,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCoun
                                 <img src={item.image}></img>
                                 <div className="cartItemDetails">
                                     <b><p className ="name">{item.name}</p></b>
-                                    <p className="number">${Number(item.price * item.quantity).toFixed(2)}</p>
+                                    <p className="number">${Number((item.price * item.quantity) - item.discount).toFixed(2)}</p>
                                 </div>
                             </div>
                             <div className ="itemControls">
