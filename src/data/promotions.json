@@ -4,14 +4,14 @@
         "image": "./images/BOGOBurgers.png",
         "description": "Buy one get one free burgers and sandwiches!",
         "type": "BOGO",
-        "applicableItems": [1, 2]
+        "applicableItems": [100, 200]
     },
     {
         "id": 2,
         "image": "./images/FreeSodaPromo.png",
         "description": "Free soda with any order of wings!", 
         "type": "FREEITEM",
-        "applicableItems": [7]
+        "applicableItems": [500, 600]
     }
 
 ]

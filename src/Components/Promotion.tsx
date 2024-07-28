@@ -1,5 +1,6 @@
 import React from 'react';
 import { PromoType } from '../types';
+import { Link } from 'react-router-dom';
 
 interface PromotionProperties {
     item: PromoType;
@@ -19,7 +20,7 @@ const Promotion : React.FC<PromotionProperties> = ({item}) => {
                 <img src={item.image !== "N/A" ? item.image : "./images/default.jpg"}/>
             </div>
 
-            <button>View Applicable Items</button>
+            <Link className='menuLink' to = {`/applicable-items/${item.id}`}>View Applicable Items</Link>
 
         </div>
     );

@@ -10,6 +10,7 @@ import Home from './Pages/Home.tsx';
 import NavBar from './Components/NavBar.tsx';
 import Checkout from './Pages/Checkout.tsx';
 import Confirmation from './Pages/Confirmation.tsx';
+import ApplicablePromoItems from './Pages/ApplicablePromoItems.tsx';
 
 
 // TODO: Make less ugly bruv
@@ -156,6 +157,7 @@ const App: React.FC = ()  => {
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
         <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} />} />
         <Route path="/confirmation" element={<Confirmation paymentInfo = {paymentInfo} />} />
+        <Route path="/applicable-items/:id" element={<ApplicablePromoItems addToCart={addToCart} />} />
       </Routes>
 
       { isCartOpen && (

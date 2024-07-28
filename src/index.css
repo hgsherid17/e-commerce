@@ -282,6 +282,9 @@ input {
   color: var(--main-color);
 }
 
+.foodItemInfo p {
+  margin: 0;
+}
 
 /** CART **/
 .cartContainer {
