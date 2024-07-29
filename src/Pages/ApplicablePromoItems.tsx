@@ -24,10 +24,12 @@ const ApplicablePromoItems : React.FC<ApplicablePromoItemsProperties> = ({ addTo
         const applicableItemIds = promo?.applicableItems;
 
         // Get applicable items from foodItems
+        setApplicableItems([]);
+        
         for ( let i = 0; i < Object.keys(foodItems).length; i++) {
             const categoryKey = Object.keys(foodItems)[i];
             const category = foodItems[categoryKey as keyof typeof foodItems]
-
+            
             if (applicableItemIds?.includes(category.id)) {
                 setApplicableItems(prevItems => [...prevItems, ...category.items])
             }
@@ -35,13 +37,13 @@ const ApplicablePromoItems : React.FC<ApplicablePromoItemsProperties> = ({ addTo
         }
 
     }
-/*
+
     useEffect(() => {
         if (id) {
             getApplicableItems(parseInt(id));
         }
 
-    }, [id])*/
+    }, [id])
     
 
     return (

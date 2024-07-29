@@ -389,7 +389,7 @@ input {
 .itemInfo img {
   width: 80px;
   height: 80px;
-  margin-right: 20px;
+  margin-right: 0;
   border-radius: 8px;
 }
 
@@ -398,14 +398,27 @@ input {
     justify-content: space-between;
     width: 100%;
     margin-bottom: 10px;
+    align-items: center;
 }
 .cartItemDetails .name {
   text-transform: uppercase;
   color: var(--main-color);
 }
-.cartItemDetails .number {
+.cartItemDetails .priceInfo {
+  margin: 0;
 
 }
+.cartItemDetails .priceInfo .numberStrike {
+  text-decoration: line-through;
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+.discount {
+  color: green;
+  margin-top: 0;
+}
+
+
 
 .review {
   margin-bottom: 1rem;

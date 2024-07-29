@@ -8,6 +8,7 @@ import foodItems from '../data/foodItems.json';
 interface CartProperties {
     cart: CartItemType[];
     totalPrice: number;
+    actualTotal: number;
     currentTax: number;
     cartCount: number;
     toggle: () => void;
@@ -15,7 +16,7 @@ interface CartProperties {
     addToCart: (id: number) => void;
 }
 
-const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCount, toggle, removeFromCart, addToCart}) => {
+const Cart : React.FC<CartProperties> = ({cart, totalPrice, actualTotal, currentTax, cartCount, toggle, removeFromCart, addToCart}) => {
     // TODO: Is there a way to do this in App? Or move variables like this to this component?
     const increment = (item: CartItemType) => {
         if (item.quantity < 20) {
@@ -40,61 +41,6 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCoun
         }
         return undefined;
     };
-
-    const applyPromotion = () => {
-        // Loop through promos
-        for (const item of cart) {
-
-            const categoryId = getCategoryByItemId(item.id);
-
-    
-            if (categoryId) {
-                for (const promo of promos) {
-                    if (promo.applicableItems.includes(categoryId)) {
-                        if (promo.type === "BOGO") {
-                            console.log("Here is item: " + item.name + " and promo: " + promo.type);
-
-                        }
-                        if (promo.type === "FREEITEM") {
-                            console.log("Here is item: " + item.name + " and promo: " + promo.type);
-
-                        }
-
-
-                    }
-                }
-            }
-            
-
-        }
-    }
-        // The complexity is crazy here
-        /*for (let i = 0; i < promos.length; i++) {
-            for (const categoryKey in promos[i].applicableItems) {
-                const items = getCategoryItems(parseInt(categoryKey));
-                for (const item in items) {
-                    
-                }
-            }
-        }*/
-        // Find category.items
-
-        
-        // If promo.type === BOGO
-            // If item.quantity >= 2
-                // If item.quantity % 2 === 0
-                    // BOGOPROMOPRICE = item.totalPrice / 2
-                    // Print promo applied
-                // Else [item.quantity - 1 % 2 === 0]
-                    // BOGOPROMOPRICE = item.price - 1 * item.quantity / 2
-            // Else
-                // Unapplicable, print (would you like to buy one get one free?
-                // Link to applicableitems/:promoId
-    
-        // If promo.type === FREEITEM
-            // 
-    
-        // Apply promotion
     
     return (
         <div className = "cart">
@@ -134,7 +80,17 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCoun
                                 <img src={item.image}></img>
                                 <div className="cartItemDetails">
                                     <b><p className ="name">{item.name}</p></b>
-                                    <p className="number">${Number((item.price * item.quantity) - item.discount).toFixed(2)}</p>
+                                    { item.discount === 0  && (
+                                        <div className="priceInfo">
+                                            <p className="number">${Number(item.price * item.quantity).toFixed(2)}</p>
+                                        </div>
+                                    )}
+                                    { item.discount !== 0 && (
+                                        <div className="priceInfo">
+                                            <p className="numberStrike">${Number(item.price * item.quantity).toFixed(2)}</p>
+                                            <p className="discount">  ${Number((item.price * item.quantity) - item.discount).toFixed(2)}</p>
+                                        </div>
+                                    )}   
                                 </div>
                             </div>
                             <div className ="itemControls">
@@ -164,7 +120,11 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, currentTax, cartCoun
                 
                     
                 <hr></hr> 
-                <p>Subtotal: ${(totalPrice).toFixed(2)}</p>
+                
+                <p>Subtotal: ${(actualTotal).toFixed(2)}</p>
+                { actualTotal !== totalPrice && (
+                    <p>Discounts: <span className ="discount">-${(actualTotal - totalPrice).toFixed(2)}</span></p>
+                )}
                 <p>Tax: ${(currentTax).toFixed(2)}</p>
                 <p>Total: ${(totalPrice + currentTax).toFixed(2)}</p>
 
