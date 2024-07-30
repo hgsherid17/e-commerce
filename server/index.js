@@ -11,6 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../build')));
+
 app.post('/create-payment-intent', async (req, res) => {
     const { amount } = req.body;
     // Ensure rounded in cents
@@ -30,6 +33,10 @@ app.post('/create-payment-intent', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
     
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
 app.listen(port, () => console.log("Stripe server running on port " + port));
