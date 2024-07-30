@@ -532,6 +532,7 @@ input {
   border:none;
   text-transform: uppercase;
   text-decoration: underline;
+  color: black;
 }
 
 .removeFromCart:hover {

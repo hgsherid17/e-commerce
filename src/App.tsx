@@ -1,5 +1,5 @@
 import React, { act, useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, renderMatches } from 'react-router-dom';
 import Cart from './Components/Cart.tsx';
 import { CartItemType, FoodItemType} from './types.ts';
 import foodItems from './data/foodItems.json'; // Static data does not need useState
@@ -65,16 +65,19 @@ const bogo = (item: CartItemType) => {
     }
     else {
         item.discount = ((item.quantity - 1) * item.price) / 2;
+        //item.discount = item.discount;
         console.log(item.quantity + " " + item.name + " " + item.discount);
     }
-
-    //setTotalDiscount(prevDisc => prevDisc + item.discount);
+  }
+  else {
+    item.discount = 0;
   }
 
 }
 const applyPromotion = () => {
     // Loop through promos
     for (const item of cart) {
+      //item.discount = 0;
 
         const categoryId = getCategoryByItemId(item.id);
 
@@ -130,11 +133,7 @@ const applyPromotion = () => {
 
             // Update count and price
             setCartCount(prevCount => prevCount + 1);
-            //setTotalPrice(prevTotal => prevTotal + addedItem.price);
-            //applyPromotion();
-
             setActualTotal(prevTotal => prevTotal + addedItem.price);
-            //setTotalPrice(actualTotal - cart[itemIndex].discount);
   
           }
           else {
@@ -150,20 +149,11 @@ const applyPromotion = () => {
 
           // Update count and price
           setCartCount(prevCount => prevCount + 1)
-
-          //setTotalPrice(prevTotal => prevTotal + addedItem.price);
-          //applyPromotion();
           setActualTotal(prevTotal => prevTotal + addedItem.price);
-          console.log(actualTotal);
-          //setTotalPrice(actualTotal - cartItem.discount);
-          console.log(totalPrice);
           
         } 
-        applyPromotion();
-      
-        //setCartCount(prevCount => prevCount + 1);
-        //setTotalPrice(prevTotal => (prevTotal + addedItem.price));
-        //setTotalPrice(prevTotal => (prevTotal + addedItem.price));
+        //applyPromotion();
+  
     }
     
     else {
@@ -185,7 +175,7 @@ const applyPromotion = () => {
       if (quantity === itemToRemove.quantity) {
         const updatedCart = cart.filter(item => item.id !== id);
         setCart(updatedCart);
-        setTotalPrice(prevTotal => prevTotal - (itemToRemove.price * quantity));
+        setActualTotal(prevTotal => prevTotal - (itemToRemove.price * quantity));
         setCartCount(cartCount - quantity);
         console.log("Removed item: " + itemToRemove.name + " from cart.")
       }
@@ -196,14 +186,16 @@ const applyPromotion = () => {
             prevCart.map(item => 
               item.id === id ? { ...item, quantity: quantity } : item
           ));
-          setTotalPrice(prevTotal => prevTotal - itemToRemove.price);
+          setActualTotal(prevTotal => prevTotal - itemToRemove.price);
           setCartCount(cartCount - 1);
           console.log("New quantity of cart item " + itemToRemove.name + ": " + quantity)
+
         }
         else {
           console.error("Cannot update quantity of item: " + itemToRemove.name);
         }
       }
+      //applyPromotion();
     }
     else {
       console.error("Item with id: " + id + " is not in cart");
@@ -218,18 +210,25 @@ const applyPromotion = () => {
     console.log("Is cart open: " + !isCartOpen);
   };
 
+
+  useEffect(() => {
+    applyPromotion();
+    const discount = cart.reduce((acc, item) => acc + item.discount, 0);
+    setTotalPrice(actualTotal - discount);
+  }, [cart, addToCart, removeFromCart]); 
+
   // Automatically update tax when item is added
   useEffect(() => {
     setCurrentTax(totalPrice * tax);
-    setCart(cart);
-    setPaymentInfo(paymentInfo);
-  }, [totalPrice, cart, paymentInfo])
+    //setCart(cart);
+    //setPaymentInfo(paymentInfo);
+  }, [totalPrice])
 
+  /*useEffect (() => {
+    applyPromotion();
+    //setTotalPrice(totalPrice);
+  }, [addToCart, removeFromCart])*/
 
-  useEffect(() => {
-    const discount = cart.reduce((acc, item) => acc + item.discount, 0);
-    setTotalPrice(actualTotal - discount);
-  }, [actualTotal]);
   return (
 
     <div className = "app">

@@ -80,7 +80,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, actualTotal, current
                                 <img src={item.image}></img>
                                 <div className="cartItemDetails">
                                     <b><p className ="name">{item.name}</p></b>
-                                    { item.discount === 0  && (
+                                    { item.discount === 0 && (
                                         <div className="priceInfo">
                                             <p className="number">${Number(item.price * item.quantity).toFixed(2)}</p>
                                         </div>
