@@ -1,9 +1,7 @@
 // POPUP SRC: GeeksForGeeks
-import React , {useCallback, useEffect} from 'react';
+import React from 'react';
 import { CartItemType } from '../types';
 import { Link } from 'react-router-dom';
-import promos from '../data/promotions.json';
-import foodItems from '../data/foodItems.json';
 
 interface CartProperties {
     cart: CartItemType[];
@@ -17,7 +15,6 @@ interface CartProperties {
 }
 
 const Cart : React.FC<CartProperties> = ({cart, totalPrice, actualTotal, currentTax, cartCount, toggle, removeFromCart, addToCart}) => {
-    // TODO: Is there a way to do this in App? Or move variables like this to this component?
     const increment = (item: CartItemType) => {
         if (item.quantity < 20) {
             addToCart(item.id);
@@ -31,7 +28,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, actualTotal, current
         }
     }
 
-    const getCategoryByItemId = (itemId: number): number | undefined => {
+    /*const getCategoryByItemId = (itemId: number): number | undefined => {
         for (const categoryKey in foodItems) {
             const category = foodItems[categoryKey as keyof typeof foodItems];
             if (category.items.some(item => item.id === itemId)) {
@@ -40,7 +37,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, actualTotal, current
 
         }
         return undefined;
-    };
+    };*/
     
     return (
         <div className = "cart">

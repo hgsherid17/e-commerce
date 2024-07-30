@@ -17,7 +17,7 @@ const Checkout: React.FC<CheckoutProperties> = ( {cart, currentTax, totalPrice, 
                     console.log("HI! Creating Intent in CHECKOUT");
 
                     console.log(import.meta.env.VITE_BACKEND_URL)
-                    const response = await fetch(`${import.meta.env.API_BASE}/create-payment-intent`, {
+                    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/create-payment-intent`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

@@ -1,5 +1,5 @@
-import React, { act, useEffect, useState } from 'react';
-import { Routes, Route, renderMatches } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Cart from './Components/Cart.tsx';
 import { CartItemType, FoodItemType} from './types.ts';
 import foodItems from './data/foodItems.json'; // Static data does not need useState
@@ -13,9 +13,13 @@ import Confirmation from './Pages/Confirmation.tsx';
 import ApplicablePromoItems from './Pages/ApplicablePromoItems.tsx';
 import promos from './data/promotions.json';
 
-
-// TODO: Make less ugly bruv
-// TODO: Pass in category object to FoodCategory component rather than all its info
+/**
+ * 
+ * NOTE TO ANY ONLOOKERS
+ * THIS APP COMPONENT IS WILDLY EMBARASSING.
+ * IT STRESSES ME OUT TOO.
+ * I JUST DO NOT HAVE TIME TO MOVE THESE FUNCTIONS INTO COMPONENTS :(
+ */
 
 const getAllFoodItems  = (categories: { [key: string]: { items: FoodItemType[] } }) => {
   // Flatten food items json to get all items from each category

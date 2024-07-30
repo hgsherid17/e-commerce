@@ -67,7 +67,7 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
         
         try {
                 console.log("HI! CREATING INTENT");
-                const response = await axios.post(`${import.meta.env.API_BASE}/create-payment-intent`, {
+                const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/create-payment-intent`, {
                 amount: totalAmount 
                 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import promos from '../data/promotions.json';
 import foodItems from '../data/foodItems.json';
 import { FoodItemType } from '../types';
