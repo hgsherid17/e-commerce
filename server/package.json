@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:frontend": "cd .. && npm install && npm run build",
     "start": "node index.js",
-    "start:all": "npm run build:frontend && npm install && npm start",
+    "start:all": "cd .. && npm install && npm run build && cd server && npm install && npm start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
   },
