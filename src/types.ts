@@ -44,6 +44,7 @@ export interface CheckoutProperties {
     currentTax: number;
     totalPrice: number;
     setPaymentInfo: (paymentInfo: any) => void;
+    actualTotal: number;
 }
 
 

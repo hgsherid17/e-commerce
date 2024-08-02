@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, act } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import { CheckoutProperties } from '../types';
@@ -10,7 +10,7 @@ import { CheckoutProperties } from '../types';
 }
 // SRC: Style element - https://docs.stripe.com/elements/appearance-api*/
 
-const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPrice, setPaymentInfo}) => {
+const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPrice, setPaymentInfo, actualTotal}) => {
     const stripe = useStripe();
     const elements = useElements();
     //const totalAmount = Math.round((currentTax + totalPrice));
@@ -103,7 +103,9 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
             }
 
     };
-    
+
+    const hasDiscount = cart.some(item => item.discount > 0);
+
     return (
 
         <div className = "checkoutForm">
@@ -126,13 +128,19 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
                 <div key={item.id} className = "checkoutItem">
                     <img src={item.image}></img>
                     <p><span className = "itemQuan">{item.quantity}x</span> {item.name}</p>
-                    <p>{item.price * item.quantity}</p>
+                    <p>{(item.price * item.quantity) - item.discount}</p>
                 </div>
             ))}
             </div>
 
             <hr></hr>
-            <p>Subtotal: {(totalPrice).toFixed(2)}</p>
+            
+            <p>Subtotal: {(actualTotal).toFixed(2)}</p>
+            {
+                hasDiscount && (
+                    <p>Discount: -${(actualTotal - totalPrice).toFixed(2)}</p>
+                )
+            }
             <p>Tax: {(currentTax).toFixed(2)}</p>
             <p>Total: {(totalAmount).toFixed(2)}</p>
 

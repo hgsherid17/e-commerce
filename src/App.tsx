@@ -100,14 +100,12 @@ const App: React.FC = ()  => {
       }
     }
     // Update cart with new discount
-    setCart(prevCart =>
+    /*setCart(prevCart =>
       prevCart.map(cartItem =>
         cartItem.id === item.id ? { ...cartItem, discount } : cartItem
       )
     );
-    console.log(cart);
-
-    //calculateDiscount();
+    console.log(cart);*/
     
   }
 
@@ -192,6 +190,8 @@ const App: React.FC = ()  => {
         // Set total and count
         setActualTotal(prevTotal => prevTotal - itemToRemove.price);
         setCartCount(prevCount => prevCount - 1);
+
+        // Apply promos
         applyPromotion(itemToRemove, quantity);
 
       }
@@ -233,7 +233,7 @@ const App: React.FC = ()  => {
         <Route path="/menu" element={<Menu />} />
         <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
-        <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} />} />
+        <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} actualTotal={actualTotal} />} />
         <Route path="/confirmation" element={<Confirmation paymentInfo = {paymentInfo} />} />
         <Route path="/applicable-items/:id" element={<ApplicablePromoItems addToCart={addToCart} applicableItems={applicableItems} setApplicableItems = {setApplicableItems} />} />
       </Routes>

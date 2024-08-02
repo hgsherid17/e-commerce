@@ -8,7 +8,7 @@ import { CheckoutProperties } from '../types';
 
 const stripe = loadStripe('pk_test_51PfQVNJyX9kTwHpnF6XHj3YwT3TTJnjSnJgGGxBAiMN7sBZStlX0DjR1IG7XYHVrBUK92mTsVHnvcmowu8zsCA2300QaNWapvJ');
 
-const Checkout: React.FC<CheckoutProperties> = ( {cart, currentTax, totalPrice, setPaymentInfo} ) => {
+const Checkout: React.FC<CheckoutProperties> = ( {cart, currentTax, totalPrice, setPaymentInfo, actualTotal} ) => {
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const fetchClientSecret = async () => 
         {
@@ -59,6 +59,7 @@ const Checkout: React.FC<CheckoutProperties> = ( {cart, currentTax, totalPrice, 
                     currentTax= {currentTax} 
                     totalPrice={totalPrice} 
                     setPaymentInfo={setPaymentInfo} 
+                    actualTotal={actualTotal}
                 />
             </Elements>
         )}
