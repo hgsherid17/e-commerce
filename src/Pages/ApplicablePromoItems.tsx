@@ -12,11 +12,11 @@ interface ApplicablePromoItemsProperties {
     
 }
 const ApplicablePromoItems : React.FC<ApplicablePromoItemsProperties> = ({ addToCart, applicableItems, setApplicableItems }) => {
-    console.log("WE ARE HERE");
+    //console.log("WE ARE HERE");
     const { id } = useParams<{ id: string }>();
 
     const getApplicableItems = (promoId : number) => {
-        console.log("IN FUNCTION NOW");
+        //console.log("IN FUNCTION NOW");
         // Get promo with given id
         const promo = promos.find(item => item.id === promoId);
 

@@ -28,16 +28,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, actualTotal, current
         }
     }
 
-    /*const getCategoryByItemId = (itemId: number): number | undefined => {
-        for (const categoryKey in foodItems) {
-            const category = foodItems[categoryKey as keyof typeof foodItems];
-            if (category.items.some(item => item.id === itemId)) {
-                return category.id;
-            }
-
-        }
-        return undefined;
-    };*/
+    const hasDiscount = cart.some(item => item.discount > 0);
     
     return (
         <div className = "cart">
@@ -77,17 +68,18 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, actualTotal, current
                                 <img src={item.image}></img>
                                 <div className="cartItemDetails">
                                     <b><p className ="name">{item.name}</p></b>
-                                    { item.discount === 0 && (
+                                    { Math.round(item.discount) === 0 ? (
                                         <div className="priceInfo">
                                             <p className="number">${Number(item.price * item.quantity).toFixed(2)}</p>
                                         </div>
-                                    )}
-                                    { item.discount !== 0 && (
+                                    ) : (
                                         <div className="priceInfo">
                                             <p className="numberStrike">${Number(item.price * item.quantity).toFixed(2)}</p>
                                             <p className="discount">  ${Number((item.price * item.quantity) - item.discount).toFixed(2)}</p>
                                         </div>
-                                    )}   
+                                    )
+                                    }
+
                                 </div>
                             </div>
                             <div className ="itemControls">
@@ -119,7 +111,7 @@ const Cart : React.FC<CartProperties> = ({cart, totalPrice, actualTotal, current
                 <hr></hr> 
                 
                 <p>Subtotal: ${(actualTotal).toFixed(2)}</p>
-                { actualTotal !== totalPrice && (
+                { hasDiscount && (
                     <p>Discounts: <span className ="discount">-${(actualTotal - totalPrice).toFixed(2)}</span></p>
                 )}
                 <p>Tax: ${(currentTax).toFixed(2)}</p>

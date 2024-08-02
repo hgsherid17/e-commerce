@@ -37,7 +37,7 @@ const App: React.FC = ()  => {
   const [paymentInfo, setPaymentInfo] = useState<any>(null);
   const [applicableItems, setApplicableItems] = useState<FoodItemType[]>([]);
   const [actualTotal, setActualTotal] = useState<number>(0);
-  //const [totalDiscount, setTotalDiscount] = useState<number>(0);
+  const [totalDiscount, setTotalDiscount] = useState<number>(0);
 
   const tax = 0.04;
 
@@ -59,68 +59,65 @@ const App: React.FC = ()  => {
 
     }
     return undefined;
-};
+  };
 
-const bogo = (item: CartItemType) => {
-  if (item.quantity >= 2) {
-    if (item.quantity % 2 === 0) {
-        item.discount = (item.quantity * item.price) / 2;
-        console.log("mod " + item.quantity + " " + item.name + " " + item.discount);
+  const bogo = (item: CartItemType, quantity: number) => {
+    let discount = 0;
+
+    if (quantity >= 2) {
+      if (quantity % 2 === 0) {
+        discount = (quantity / 2) * item.price;
+      }
+      else {
+        discount = ((quantity - 1) / 2) * item.price;
+      }
     }
-    else {
-        item.discount = ((item.quantity - 1) * item.price) / 2;
-        //item.discount = item.discount;
-        console.log(item.quantity + " " + item.name + " " + item.discount);
-    }
-  }
-  else {
-    item.discount = 0;
+
+    item.discount = discount;
+
+    return discount;
+
   }
 
-}
-const applyPromotion = () => {
-    // Loop through promos
-    for (const item of cart) {
-      //item.discount = 0;
+  const applyPromotion = (item: CartItemType, quantity: number) => {
 
-        const categoryId = getCategoryByItemId(item.id);
+    let discount = 0;
 
-        if (categoryId) {
-            for (const promo of promos) {
-                if (promo.applicableItems.includes(categoryId)) {
-                    if (promo.type === "BOGO") {
-                        console.log("Here is item: " + item.name + " and promo: " + promo.type);
-                        bogo(item);
-                    }
-                    if (promo.type === "FREEITEM") {
-                        console.log("Here is item: " + item.name + " and promo: " + promo.type);
+    const categoryId = getCategoryByItemId(item.id);
 
-                    }
-
-
-                }
-            }
+    if (categoryId) {
+      for (const promo of promos) {
+        if (promo.applicableItems.includes(categoryId)) {
+          if (promo.type === "BOGO") {
+            console.log("BOGO: " + discount + " " + item.discount)
+            discount = bogo(item, quantity);
+            console.log("AFTER BOGO: " + discount + " " + item.discount)
+          }
+          if (promo.type === "FREEITEM") {
+            // Free item
+          }
         }
-        
-
+      }
     }
-}
+    // Update cart with new discount
+    setCart(prevCart =>
+      prevCart.map(cartItem =>
+        cartItem.id === item.id ? { ...cartItem, discount } : cartItem
+      )
+    );
+    console.log(cart);
+
+    //calculateDiscount();
+    
+  }
 
   /**
    * Adds a given food item by id to an array representing a cart
    * @param id 
    */
-  /** TODO: LESS UGLY!!!! LESS GROSS!!!!!!!!!!!
-   * THIS IS UGLY AND GROSS!!!!!!!!
-   * Instead:
-   * Check item in cart
-   * Use update function to check and update quantity
-   * Return bool from that
-   * and if true update count and price
-   * 
-   */
   const addToCart = (id: number) => {
     const addedItem = allItems.find(item => item.id === id);
+    //let cartItem = CartItem | null;
 
     // If item exists
     if (addedItem) {
@@ -129,16 +126,20 @@ const applyPromotion = () => {
 
         // Item is in cart
         if (itemIndex >= 0) {
+          const cartItem = cart[itemIndex];
+
           // Item cannot have quantity above 20
-          if (cart[itemIndex].quantity < 20) {
+          if (cartItem.quantity < 20) {
             // Update item quantity
-            cart[itemIndex].quantity += 1;
+            cartItem.quantity += 1;
             console.log("New quantity of cart item " + cart[itemIndex].name + ": " + cart[itemIndex].quantity);
 
             // Update count and price
             setCartCount(prevCount => prevCount + 1);
             setActualTotal(prevTotal => prevTotal + addedItem.price);
-  
+
+            // Apply promos
+            applyPromotion(cartItem, cartItem.quantity);
           }
           else {
             console.log("Too many " + cart[itemIndex].name + " in cart. Could not update quantity or price.")
@@ -154,16 +155,14 @@ const applyPromotion = () => {
           // Update count and price
           setCartCount(prevCount => prevCount + 1)
           setActualTotal(prevTotal => prevTotal + addedItem.price);
-          
+
+          // Apply promos
+          applyPromotion(cartItem, cartItem.quantity);
         } 
-        //applyPromotion();
-  
     }
-    
     else {
       console.error("Could not find item " + id);
     }
-
   };
 
   /**
@@ -171,7 +170,7 @@ const applyPromotion = () => {
    * @param id 
    */
   const removeFromCart = (id: number, quantity: number) => {
-
+  
     const itemToRemove = cart.find(item => item.id === id);
 
     if (itemToRemove) {
@@ -179,30 +178,23 @@ const applyPromotion = () => {
       if (quantity === itemToRemove.quantity) {
         const updatedCart = cart.filter(item => item.id !== id);
         setCart(updatedCart);
-        setActualTotal(prevTotal => prevTotal - (itemToRemove.price * quantity));
-        setCartCount(cartCount - quantity);
-        console.log("Removed item: " + itemToRemove.name + " from cart.")
-      }
-      // If updating quantity in cart
-      else {
-        if (quantity === itemToRemove.quantity - 1) {
-          setCart(prevCart => 
-            prevCart.map(item => 
-              item.id === id ? { ...item, quantity: quantity } : item
-          ));
-          setActualTotal(prevTotal => prevTotal - itemToRemove.price);
-          setCartCount(cartCount - 1);
-          console.log("New quantity of cart item " + itemToRemove.name + ": " + quantity)
 
-        }
-        else {
-          console.error("Cannot update quantity of item: " + itemToRemove.name);
-        }
+        // Set total and count 
+        setActualTotal(prevTotal => prevTotal - (itemToRemove.price * quantity));
+        setCartCount(prevCount => prevCount - quantity);
       }
-      //applyPromotion();
-    }
-    else {
-      console.error("Item with id: " + id + " is not in cart");
+      if (quantity === itemToRemove.quantity - 1) {
+        setCart(prevCart => 
+          prevCart.map(item => 
+            item.id === id ? { ...item, quantity: quantity} : item
+        ));
+        
+        // Set total and count
+        setActualTotal(prevTotal => prevTotal - itemToRemove.price);
+        setCartCount(prevCount => prevCount - 1);
+        applyPromotion(itemToRemove, quantity);
+
+      }
     }
   }
 
@@ -214,24 +206,22 @@ const applyPromotion = () => {
     console.log("Is cart open: " + !isCartOpen);
   };
 
+  const calculateDiscount  =() => {
+    const totalDiscount = cart.reduce((total, item) => total + item.discount, 0);
+    setTotalDiscount(totalDiscount);
+
+  };
+
 
   useEffect(() => {
-    applyPromotion();
-    const discount = cart.reduce((acc, item) => acc + item.discount, 0);
-    setTotalPrice(actualTotal - discount);
-  }, [cart, addToCart, removeFromCart]); 
+    calculateDiscount();
+    setTotalPrice(actualTotal - totalDiscount);
+  }, [cart, actualTotal, totalDiscount]); 
 
   // Automatically update tax when item is added
   useEffect(() => {
     setCurrentTax(totalPrice * tax);
-    //setCart(cart);
-    //setPaymentInfo(paymentInfo);
   }, [totalPrice])
-
-  /*useEffect (() => {
-    applyPromotion();
-    //setTotalPrice(totalPrice);
-  }, [addToCart, removeFromCart])*/
 
   return (
 

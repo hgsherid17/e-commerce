@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../build')));
+///app.use(express.static(path.join(__dirname, '../build')));
 
 app.post('/create-payment-intent', async (req, res) => {
     const { amount } = req.body;
@@ -35,8 +35,8 @@ app.post('/create-payment-intent', async (req, res) => {
     
 });
 
-app.get('*', (req, res) => {
+/*app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
+});*/
 
 app.listen(port, () => console.log("Stripe server running on port " + port));
