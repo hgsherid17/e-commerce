@@ -276,7 +276,7 @@ const App: React.FC = ()  => {
         <Route path="/menu/:category" element={<MenuCategory addToCart={addToCart}/>} />
         <Route path="/menu/all" element={<MenuAll addToCart = {addToCart} getAllFoodItems={getAllFoodItems}/>} />
         <Route path="/checkout" element={<Checkout cart = {cart} currentTax = {currentTax} totalPrice={totalPrice} setPaymentInfo = {setPaymentInfo} actualTotal={actualTotal} />} />
-        <Route path="/confirmation" element={<Confirmation paymentInfo = {paymentInfo} />} />
+        <Route path="/confirmation" element={<Confirmation amount = {actualTotal} cart={cart}/>} />
         <Route path="/applicable-items/:id" element={<ApplicablePromoItems addToCart={addToCart} applicableItems={applicableItems} setApplicableItems = {setApplicableItems} />} />
       </Routes>
 

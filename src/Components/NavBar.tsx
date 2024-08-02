@@ -12,7 +12,7 @@ const NavBar : React.FC<NavBarProperties> = ({ toggleCart, cartCount }) => {
 
     return (
         <div className = "navBar">
-            <img src="/images/logo.png"/>
+            <img className = "logo" src="/images/logo.png"/>
             <NavLink className = {({ isActive }) => (isActive ? 'activeLink' : 'link')} to="/">Home</NavLink>
             <NavLink className = {({ isActive }) => (isActive ? 'activeLink' : 'link')} to="/menu">Menu</NavLink>
             <div className="cartContainer">

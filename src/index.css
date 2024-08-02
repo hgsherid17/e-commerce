@@ -251,8 +251,9 @@ input {
   right: 0;
   z-index: 15;
 }
-.navBar img {
+.navBar .logo {
   width: 90px;
+
 }
 .navBar h2 {
   font-family: var(--main-font);
@@ -419,8 +420,6 @@ input {
   color: green;
   margin-top: 0;
 }
-
-
 
 .review {
   margin-bottom: 1rem;

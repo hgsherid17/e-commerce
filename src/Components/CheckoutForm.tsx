@@ -1,7 +1,8 @@
-import React, { useState, ChangeEvent, act } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { CheckoutProperties } from '../types';
+import { CheckoutProperties, PaymentInfo } from '../types';
+
 //import { useNavigate } from 'react-router-dom';
 
 /*interface PaymentConfirmationResult {
@@ -43,27 +44,8 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
         if (!stripe || !elements) {
             return;
         }
+
         setLoading(true);
-        /*
-
-        const cardElement = elements.getElement(CardElement);
-
-        const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: cardElement!,
-            billing_details: {
-                name: formData.name,
-                email: formData.email,
-                address: {
-                    line1: formData.address
-                }
-            }
-        });
-
-        if (paymentMethodError) {
-            console.error(paymentMethodError);
-            return;
-        }*/
         
         try {
                 console.log("HI! CREATING INTENT");
@@ -86,16 +68,13 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
                     console.error(confirmationError);
                     return;
                 }
-                    console.log('Payment successful');
+                
+                
+                
+                console.log('Payment successful');
 
-                    setPaymentInfo({
-                        amount: totalAmount,
-                        name: formData.name,
-                        email: formData.email,
-                        summary: cart
-                    })
+                setLoading(false);
 
-                    setLoading(false);
                 
 
         } catch (error) {
@@ -106,6 +85,15 @@ const CheckoutForm : React.FC<CheckoutProperties> = ({ cart, currentTax, totalPr
 
     const hasDiscount = cart.some(item => item.discount > 0);
 
+    useEffect(() => {
+        sessionStorage.setItem('paymentInfo', JSON.stringify({
+            amount: totalAmount,
+            name: formData.name,
+            email: formData.email,
+            summary: cart
+        }));
+        
+    }, [formData, cart, totalAmount, setPaymentInfo]);
     return (
 
         <div className = "checkoutForm">

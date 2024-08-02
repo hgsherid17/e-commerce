@@ -48,6 +48,13 @@ export interface CheckoutProperties {
     actualTotal: number;
 }
 
+export interface PaymentInfo {
+    amount: number;
+    name: string;
+    email: string;
+    summary: CartItemType[];
+}
+
 
 export type SearchTermType = string;
 
