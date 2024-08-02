@@ -76,14 +76,28 @@
 ]},
 "Salads": {
     "id": 300,
-    "image":"/images/salad.jpg",
+    "image":"/images/garden_salad.png",
     "items": [
     {
         "id": 10,
-        "image": "/images/salad.jpg",
-        "name": "Salad",
+        "image": "/images/garden_salad.png",
+        "name": "Garden Salad",
         "price": 8.99,
         "calories": 250
+    },
+    {
+        "id": 20,
+        "image": "/images/caesar_salad.png",
+        "name": "Caesar Salad",
+        "price": 8.99,
+        "calories": 350
+    },
+    {
+        "id": 21,
+        "image": "/images/greek_salad.png",
+        "name": "Greek Salad",
+        "price": 9.99,
+        "calories": 400
     }
 ]}, 
 "Sides": {
@@ -99,7 +113,7 @@
     },
     {
         "id": 12,
-        "image": "/images/curly_fries.jpg",
+        "image": "/images/curly_fries.png",
         "name": "Curly Fries",
         "price": 2.99,
         "calories": 350
@@ -148,14 +162,21 @@
 ]},
 "Wings": {
     "id": 600,
-    "image": "/images/wings.jpg",
+    "image": "/images/5wings.png",
     "items": [
     {
         "id": 18,
-        "image": "/images/wings.jpg",
-        "name": "Wings",
+        "image": "/images/5wings.png",
+        "name": "5 Piece Wings",
         "price": 5.99,
         "calories": 600
+    },
+    {
+        "id": 19,
+        "image": "/images/10wings.png",
+        "name": "10 Piece Wings",
+        "price": 9.99,
+        "calories": 1200
     }
 ]}
 }

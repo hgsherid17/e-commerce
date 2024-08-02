@@ -33,6 +33,7 @@ export interface PromoType {
     description: string;
     type: string;
     applicableItems: number[];
+    freeItems: number[];
 }
 
 export interface MenuProperties {

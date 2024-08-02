@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Cart from './Components/Cart.tsx';
-import { CartItemType, FoodItemType} from './types.ts';
+import { CartItemType, FoodItemType, PromoType} from './types.ts';
 import foodItems from './data/foodItems.json'; // Static data does not need useState
 import Menu from './Pages/Menu.tsx';
 import MenuCategory from './Pages/MenuCategory.tsx';
@@ -79,33 +79,73 @@ const App: React.FC = ()  => {
 
   }
 
-  const applyPromotion = (item: CartItemType, quantity: number) => {
-
+  const freeitem = (item: CartItemType, promo: PromoType, quantity: number) => {
     let discount = 0;
+    const categoryId = getCategoryByItemId(item.id);
+
+    // Check if soda in cart already
+    const hasFreeItem = cart.some(cartItem => {
+      const freeId = getCategoryByItemId(cartItem.id);
+      return freeId && promo.freeItems.includes(freeId) && cartItem.discount > 0;
+    });
+
+    if (hasFreeItem) {
+      console.log("free");
+      return discount;
+    }
+
+    if (categoryId && promo.applicableItems.includes(categoryId)) {
+      // Item is wings, check for soda
+      cart.forEach((free) => {
+        const freeId = getCategoryByItemId(free.id);
+
+        // Find soda in cart
+        if (freeId && promo.freeItems.includes(freeId)) {
+          
+          // Wings no longer in cart
+          if (quantity === 0) {
+            free.discount = 0;
+            return free.discount;
+          }
+
+          discount = free.price;
+          free.discount = discount;
+
+        }
+      });
+    }
+    else {
+      // Item is soda, check for wings
+      cart.forEach((app) => {
+        const appId = getCategoryByItemId(app.id);
+
+        // Find wings in cart
+        if (appId && promo.applicableItems.includes(appId)) {
+          discount = item.price;
+          item.discount = discount;
+
+        }
+      });
+      
+    }
+
+  }
+
+  const applyPromotion = (item: CartItemType, quantity: number) => {
 
     const categoryId = getCategoryByItemId(item.id);
 
-    if (categoryId) {
-      for (const promo of promos) {
-        if (promo.applicableItems.includes(categoryId)) {
-          if (promo.type === "BOGO") {
-            console.log("BOGO: " + discount + " " + item.discount)
-            discount = bogo(item, quantity);
-            console.log("AFTER BOGO: " + discount + " " + item.discount)
-          }
-          if (promo.type === "FREEITEM") {
-            // Free item
-          }
+    for (const promo of promos) {
+      if (categoryId && (promo.applicableItems.includes(categoryId) || promo.freeItems.includes(categoryId))) {
+        console.log("did I make it " + item.name);
+        if (promo.type === "BOGO") {
+          bogo(item, quantity);
+        }
+        else if (promo.type === "FREEITEM") {
+          freeitem(item, promo, quantity);
         }
       }
     }
-    // Update cart with new discount
-    /*setCart(prevCart =>
-      prevCart.map(cartItem =>
-        cartItem.id === item.id ? { ...cartItem, discount } : cartItem
-      )
-    );
-    console.log(cart);*/
     
   }
 
@@ -180,6 +220,8 @@ const App: React.FC = ()  => {
         // Set total and count 
         setActualTotal(prevTotal => prevTotal - (itemToRemove.price * quantity));
         setCartCount(prevCount => prevCount - quantity);
+
+        applyPromotion(itemToRemove, 0);
       }
       if (quantity === itemToRemove.quantity - 1) {
         setCart(prevCart => 
@@ -206,7 +248,7 @@ const App: React.FC = ()  => {
     console.log("Is cart open: " + !isCartOpen);
   };
 
-  const calculateDiscount  =() => {
+  const calculateDiscount  = () => {
     const totalDiscount = cart.reduce((total, item) => total + item.discount, 0);
     setTotalDiscount(totalDiscount);
 
